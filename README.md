@@ -1,1 +1,1 @@
-# ZeroSC-SR_demo
+# Zero_SC

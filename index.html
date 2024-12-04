@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero_SC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .audio-sample {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold mb-4">Your Project Title</h1>
+            <div class="flex flex-wrap justify-center gap-4 mb-6">
+                <div class="text-center">
+                    <p class="font-medium">Author 1</p>
+                    <p class="text-sm text-gray-600">Affiliation</p>
+                </div>
+                <div class="text-center">
+                    <p class="font-medium">Author 2</p>
+                    <p class="text-sm text-gray-600">Affiliation</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Abstract -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Abstract</h2>
+            <p class="text-gray-700">
+                Your abstract text goes here. Provide a brief overview of your research project,
+                its objectives, methodology, and key findings.
+            </p>
+        </section>
+
+        <!-- Audio Samples -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Audio Samples</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="audio-sample">
+                    <p class="font-medium mb-2">Sample 1: Speech Example</p>
+                    <audio controls class="w-full">
+                        <source src="audio/audio1.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="audio-sample">
+                    <p class="font-medium mb-2">Sample 2: Music Example</p>
+                    <audio controls class="w-full">
+                        <source src="audio/audio2.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </section>
+
+        <!-- Paper -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Paper</h2>
+            <div class="flex gap-4">
+                <a href="#" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    PDF
+                </a>
+                <a href="#" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+                    arXiv
+                </a>
+            </div>
+        </section>
+
+        <!-- Code -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Code</h2>
+            <a href="#" class="text-blue-600 hover:underline">
+                GitHub Repository
+            </a>
+        </section>
+
+        <!-- Citation -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Citation</h2>
+            <pre class="bg-gray-100 p-4 rounded overflow-x-auto">
+@inproceedings{
+    title={Your Paper Title},
+    author={Author1 and Author2},
+    booktitle={Conference Name},
+    year={2024}
+}
+            </pre>
+        </section>
+    </div>
+</body>
+</html>
