@@ -19,23 +19,18 @@
             <div class="flex flex-wrap justify-center gap-4 mb-6">
                 <div class="text-center">
                     <p class="font-medium">Zewei Wang</p>
-                    <p class="text-sm text-gray-600">Department of Information Engineering, The Chinese University of Hong Kong</p>
                 </div>
                 <div class="text-center">
                     <p class="font-medium">Guanchong Niu</p>
-                    <p class="text-sm text-gray-600">Guangzhou Institute of Technology, Xidian University</p>
                 </div>
                 <div class="text-center">
                     <p class="font-medium">Yao Tang</p>
-                    <p class="text-sm text-gray-600">Department of Information Engineering, The Chinese University of Hong Kong</p>
                 </div>
                 <div class="text-center">
                     <p class="font-medium">Man-On Pun</p>
-                    <p class="text-sm text-gray-600">School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen</p>
                 </div>
                 <div class="text-center">
                     <p class="font-medium">Tat Ming Lok</p>
-                    <p class="text-sm text-gray-600">Department of Information Engineering, The Chinese University of Hong Kong</p>
                 </div>
             </div>
         </header>
@@ -57,17 +52,50 @@
         <section class="mb-12">
             <h2 class="text-2xl font-bold mb-4">Audio Samples</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- SNR = 5 dB -->
                 <div class="audio-sample">
-                    <p class="font-medium mb-2">Sample 1: Speech Example</p>
+                    <p class="font-medium mb-2">SNR = 5 dB: Sort-Match Strategy</p>
                     <audio controls class="w-full">
-                        <source src="audio/audio1.wav" type="audio/wav">
+                        <source src="audio/Sort_Match/sort/SNR5/121_127105_000016_000006.wav" type="audio/wav">
                         Your browser does not support the audio element.
                     </audio>
                 </div>
                 <div class="audio-sample">
-                    <p class="font-medium mb-2">Sample 2: Music Example</p>
+                    <p class="font-medium mb-2">SNR = 5 dB: Random-Match Strategy</p>
                     <audio controls class="w-full">
-                        <source src="audio/audio2.wav" type="audio/wav">
+                        <source src="audio/Sort_Match/random/SNR5/121_127105_000016_000006.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+
+                <!-- SNR = 10 dB -->
+                <div class="audio-sample">
+                    <p class="font-medium mb-2">SNR = 10 dB: Sort-Match Strategy</p>
+                    <audio controls class="w-full">
+                        <source src="audio/Sort_Match/sort/SNR10/121_127105_000016_000006.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="audio-sample">
+                    <p class="font-medium mb-2">SNR = 10 dB: Random-Match Strategy</p>
+                    <audio controls class="w-full">
+                        <source src="audio/Sort_Match/random/SNR10/121_127105_000016_000006.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+
+                <!-- SNR = 15 dB -->
+                <div class="audio-sample">
+                    <p class="font-medium mb-2">SNR = 15 dB: Sort-Match Strategy</p>
+                    <audio controls class="w-full">
+                        <source src="audio/Sort_Match/sort/SNR15/121_127105_000016_000006.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="audio-sample">
+                    <p class="font-medium mb-2">SNR = 15 dB: Random-Match Strategy</p>
+                    <audio controls class="w-full">
+                        <source src="audio/Sort_Match/random/SNR15/121_127105_000016_000006.wav" type="audio/wav">
                         Your browser does not support the audio element.
                     </audio>
                 </div>
