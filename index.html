@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,15 +15,27 @@
     <div class="container mx-auto px-4 py-8 max-w-4xl">
         <!-- Header -->
         <header class="text-center mb-12">
-            <h1 class="text-4xl font-bold mb-4">Your Project Title</h1>
+            <h1 class="text-4xl font-bold mb-4">ZeroSC-SR: Leveraging Data Importance for Efficient Semantic Speech Communication</h1>
             <div class="flex flex-wrap justify-center gap-4 mb-6">
                 <div class="text-center">
-                    <p class="font-medium">Author 1</p>
-                    <p class="text-sm text-gray-600">Affiliation</p>
+                    <p class="font-medium">Zewei Wang</p>
+                    <p class="text-sm text-gray-600">Department of Information Engineering, The Chinese University of Hong Kong</p>
                 </div>
                 <div class="text-center">
-                    <p class="font-medium">Author 2</p>
-                    <p class="text-sm text-gray-600">Affiliation</p>
+                    <p class="font-medium">Guanchong Niu</p>
+                    <p class="text-sm text-gray-600">Guangzhou Institute of Technology, Xidian University</p>
+                </div>
+                <div class="text-center">
+                    <p class="font-medium">Yao Tang</p>
+                    <p class="text-sm text-gray-600">Department of Information Engineering, The Chinese University of Hong Kong</p>
+                </div>
+                <div class="text-center">
+                    <p class="font-medium">Man-On Pun</p>
+                    <p class="text-sm text-gray-600">School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen</p>
+                </div>
+                <div class="text-center">
+                    <p class="font-medium">Tat Ming Lok</p>
+                    <p class="text-sm text-gray-600">Department of Information Engineering, The Chinese University of Hong Kong</p>
                 </div>
             </div>
         </header>
@@ -32,8 +44,12 @@
         <section class="mb-12">
             <h2 class="text-2xl font-bold mb-4">Abstract</h2>
             <p class="text-gray-700">
-                Your abstract text goes here. Provide a brief overview of your research project,
-                its objectives, methodology, and key findings.
+                Advancements in artificial intelligence have enabled the development of more efficient and semantic-aware speech communication systems. 
+                This paper introduces ZeroSC-SR (Zero-Shot Semantic Communication with Speech Reconstruction), an innovative system designed to enhance speech transmission and reconstruction in frequency-selective fading channels.
+                By efficiently transmitting phoneme sequences and compressed acoustic features, ZeroSC-SR achieves a high compression ratio and reduces transmitted data size, enabling superior performance under low-power and noisy conditions. 
+                We investigate the impact of prompt length on recognition accuracy and system performance, identifying a trade-off between performance and energy efficiency and offering practical guidelines for selecting prompt lengths.
+                Analyzing the intermediate transmission data, which includes phoneme information and acoustic features at different quantization levels, provides critical insights into their relative importance. These insights directly guide the development of our sort-match strategy, which enhances transmission quality in frequency-selective fading channels by allocating channel resources based on data importance.
+                Experimental results show that ZeroSC-SR surpasses conventional speech communication systems, demonstrating its effectiveness in real-world applications that demand reliable and efficient speech communication over challenging channels.
             </p>
         </section>
 
@@ -74,7 +90,7 @@
         <!-- Code -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold mb-4">Code</h2>
-            <a href="#" class="text-blue-600 hover:underline">
+            <a href="https://github.com/WinfredCU/ZeroSC-SR.git" class="text-blue-600 hover:underline">
                 GitHub Repository
             </a>
         </section>
@@ -84,8 +100,8 @@
             <h2 class="text-2xl font-bold mb-4">Citation</h2>
             <pre class="bg-gray-100 p-4 rounded overflow-x-auto">
 @inproceedings{
-    title={Your Paper Title},
-    author={Author1 and Author2},
+    title={ZeroSC-SR: Leveraging Data Importance for Efficient Semantic Speech Communication},
+    author={Zewei Wang, Guanchong Niu, Yao Tang, Man-On Pun, Tat Ming Lok},
     booktitle={Conference Name},
     year={2024}
 }
