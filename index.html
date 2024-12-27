@@ -40,31 +40,64 @@
             <h2 class="text-2xl font-bold mb-4">Abstract</h2>
             <p class="text-gray-700">
                 Advancements in artificial intelligence have enabled the development of more efficient and semantic-aware speech communication systems. 
-                This paper introduces ZeroSC-SR (Zero-Shot Semantic Communication with Speech Reconstruction), an innovative system designed to enhance speech transmission and reconstruction in frequency-selective fading channels.
-                By efficiently transmitting phoneme sequences and compressed acoustic features, ZeroSC-SR achieves a high compression ratio and reduces transmitted data size, enabling superior performance under low-power and noisy conditions. 
-                We investigate the impact of prompt length on recognition accuracy and system performance, identifying a trade-off between performance and energy efficiency and offering practical guidelines for selecting prompt lengths.
-                Analyzing the intermediate transmission data, which includes phoneme information and acoustic features at different quantization levels, provides critical insights into their relative importance. These insights directly guide the development of our sort-match strategy, which enhances transmission quality in frequency-selective fading channels by allocating channel resources based on data importance.
+                This paper introduces an innovative Zero-Shot Semantic Communication System with Speech Reconstruction (ZeroSC-SR), designed to enhance speech transmission and reconstruction in frequency-selective fading channels.
+                By efficiently transmitting phoneme IDs and compressed prompt acoustic features, ZeroSC-SR achieves a high compression ratio and reduces transmitted data size, enabling superior performance under low-power and noisy conditions. 
+                We investigate the impact of prompt length on recognition accuracy and system performance, identifying a trade-off between performance and energy efficiency and offering practical guidelines for selecting appropriate prompt lengths.
+                Analyzing the intermediate transmission data, which includes phoneme IDs and acoustic features at different quantization levels, provides critical insights into their relative importance. These insights directly guide the development of our sort-match strategy, which enhances transmission quality in frequency-selective fading channels by allocating channel resources based on data importance.
                 Experimental results show that ZeroSC-SR surpasses conventional speech communication systems, demonstrating its effectiveness in real-world applications that demand reliable and efficient speech communication over challenging channels.
             </p>
         </section>
 
-        <!-- Proposed System -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold mb-4">Proposed System</h2>
-            <p class="text-gray-700 mb-4">
-                ZeroSC-SR is an innovative semantic speech communication system that leverages phoneme sequences and compressed acoustic features to optimize speech transmission over frequency-selective fading channels. 
-                By prioritizing data importance and employing a sort-match strategy, it achieves high performance even under low-power and noisy conditions.
-            </p>
-            <figure class="mb-4">
-                <img src="Fig/overview.svg" alt="Proposed System Diagram" class="w-full rounded shadow">
-                <figcaption class="text-center text-sm text-gray-600 mt-2">Figure: Overview of the ZeroSC-SR system.</figcaption>
-            </figure>
-            <ul class="list-disc list-inside text-gray-700">
-                <li>Efficiently compresses and transmits speech data.</li>
-                <li>Sort-match strategy prioritizes data based on importance.</li>
-                <li>Designed to perform in challenging communication environments.</li>
-            </ul>
-        </section>
+<!-- Proposed System -->
+<section class="mb-12">
+    <h2 class="text-2xl font-bold mb-4">Proposed System</h2>
+    <p class="text-gray-700 mb-4">
+        The ZeroSC-SR system introduces a cutting-edge approach to semantic speech communication, addressing challenges in transmitting speech over frequency-selective fading channels. By combining phoneme-based semantic transmission with advanced audio codec compression, the system achieves efficient data transmission and robust performance under adverse conditions.
+    </p>
+
+    <!-- System Model Structure -->
+    <h3 class="text-xl font-bold mb-2">System Model Structure</h3>
+    <p class="text-gray-700 mb-4">
+        The ZeroSC-SR system is composed of three key components:
+        <ul class="list-disc list-inside text-gray-700">
+            <li>
+                At the <strong>transmitter</strong>, input speech is converted into phoneme IDs and compressed acoustic features using audio codec codes from the EnCodec model.
+            </li>
+            <li>
+                During <strong>channel transmission</strong>, a novel sort-match strategy prioritizes data by importance, optimizing resource allocation under frequency-selective fading conditions.
+            </li>
+            <li>
+                At the <strong>receiver</strong>, phoneme sequences and codec codes are recovered, and the VALL-E model predicts extended codec codes to reconstruct speech using the EnCodec model.
+            </li>
+        </ul>
+    </p>
+
+    <!-- Contributions -->
+    <h3 class="text-xl font-bold mb-2">Contributions</h3>
+        <ul class="list-disc list-inside text-gray-700">
+            <li>
+                <strong>Innovative Zero-Shot Semantic Communication System:</strong> The ZeroSC-SR system enables efficient digital transmission of both phonemes and acoustic features over frequency-selective fading channels. It achieves a high compression ratio and demonstrates superior performance in challenging channel conditions.
+            </li>
+            <li>
+                <strong>Trade-off Analysis Between Prompt Length and Performance:</strong> Evaluates the influence of prompt length on recognition accuracy and system performance, identifying a practical trade-off between energy efficiency and performance to guide system optimization.
+            </li>
+            <li>
+                <strong>Impact Analysis of Intermediate Transmission Data:</strong> Investigates the role of phoneme information and acoustic features at various quantization levels, providing critical insights into their importance and the design of the sort-match strategy.
+            </li>
+            <li>
+                <strong>Novel Sort-Match Strategy for Data Transmission:</strong> Proposes a strategy that ranks data by importance and allocates subcarriers accordingly, leveraging frequency-dependent channel gains to enhance performance in frequency-selective fading channels. This distinguishes ZeroSC-SR from previous systems based on frequency-flat fading assumptions.
+            </li>
+            <li>
+                <strong>Efficient Integration with Digital Communication Systems:</strong> Replaces traditional mel spectrograms with audio codec codes for intermediate representation, reducing transmitted data size. Incorporates the VALL-E model for zero-shot speech synthesis, enabling speech reconstruction for unseen speakers without relying on restricted databases.
+            </li>
+        </ul>
+    
+        <figure class="mb-4">
+            <img src="Fig/overview.svg" alt="Proposed System Diagram" class="w-full rounded shadow">
+            <figcaption class="text-center text-sm text-gray-600 mt-2">Figure: Overview of the ZeroSC-SR system structure.</figcaption>
+        </figure>
+    </section>
+
         
         <!-- Audio Samples -->
         <section class="mb-12">
