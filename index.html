@@ -55,13 +55,16 @@
       <ul class="list-disc list-inside text-gray-700 ml-4">
         <li><a href="#abstract" class="text-blue-600 hover:underline">Abstract</a></li>
         <li><a href="#proposed-system" class="text-blue-600 hover:underline">Proposed System</a></li>
-        <li><a href="#experiment-results" class="text-blue-600 hover:underline">Experiment and Numerical Results</a>
+        <li>
+          <a href="#experiment-results" class="text-blue-600 hover:underline">
+            Experiment and Numerical Results
+          </a>
           <ul class="list-decimal list-inside ml-6">
             <li><a href="#prompt-length" class="text-blue-600 hover:underline">Prompt Length</a></li>
             <li><a href="#phoneme-acoustic" class="text-blue-600 hover:underline">Phonemes vs. Acoustic Features</a></li>
             <li><a href="#importance-analysis" class="text-blue-600 hover:underline">Importance Analysis of Acoustic Features</a></li>
             <li><a href="#sort-match" class="text-blue-600 hover:underline">Sort-Match Strategy Analysis</a></li>
-            <li><a href="#comparison-models" class="text-blue-600 hover:underline">Comparison with Other Models</a></li>
+            <li><a href="#comparison-models" class="text-blue-600 hover:underline">Comparison With Other Models</a></li>
           </ul>
         </li>
         <li><a href="#code" class="text-blue-600 hover:underline">Code</a></li>
@@ -186,11 +189,85 @@
         The length of the transmitted prompt impacts both system performance and the required transmission resources. We aim to determine an appropriate prompt length that reduces resource usage while maintaining satisfactory performance. Experimental results show that increasing the prompt length reduces recognition errors (CER/WER), stabilizing around 2 seconds. After 2 seconds, returns diminish, making 2 seconds a good balance between performance and efficiency.
       </p>
 
+      <!-- Audio Samples for Prompt Length -->
+      <p class="text-gray-700 mb-4">
+        Below are placeholder audio samples illustrating different prompt lengths (1s, 2s, and 3s). Observe how short prompts might degrade semantic accuracy and speaker fidelity.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div class="audio-sample">
+          <p class="font-medium mb-2">Prompt = 1s</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Short prompt, possibly causing incomplete word boundaries.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/PromptLength/1s.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">Prompt = 2s</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Balanced prompt length for adequate semantic and acoustic info.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/PromptLength/2s.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">Prompt = 3s</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Longer prompt, potentially higher accuracy but more data overhead.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/PromptLength/3s.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+
       <!-- 2) Phonemes vs. Acoustic Features -->
       <h3 id="phoneme-acoustic" class="subsection-title">2) Phonemes vs. Acoustic Features</h3>
       <p class="text-gray-700 mb-4">
         We further investigate the sensitivity of phoneme transmission and acoustic feature transmission to channel noise. Phoneme accuracy significantly affects CER and WER, whereas acoustic features primarily influence speaker similarity. Results indicate that phonemes need higher SNR to preserve semantic content, while acoustic features require decent SNR to maintain speaker fidelity.
       </p>
+
+      <!-- Audio Samples for Phonemes vs. Acoustic Features -->
+      <p class="text-gray-700 mb-4">
+        The following samples demonstrate system performance at different SNR levels (0 dB, 5 dB, and 10 dB). Listen for semantic clarity (phonemes) vs. acoustic richness (speaker characteristics).
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 0 dB</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Very noisy, phonemes likely to degrade significantly.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/PhonemeAcoustic/0dB.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 5 dB</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Moderate noise, affecting both semantic and acoustic features.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/PhonemeAcoustic/5dB.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 10 dB</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Less noise, improved accuracy for both phonemes and acoustics.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/PhonemeAcoustic/10dB.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
 
       <!-- 3) Importance Analysis of Acoustic Features -->
       <h3 id="importance-analysis" class="subsection-title">3) Importance Analysis of Acoustic Features</h3>
@@ -198,13 +275,50 @@
         We performed a deletion-based experiment on the 8-stage audio codec codes. Removing Stage 1 caused the largest drop in performance across WER, CER, and speaker similarity. Stages 2 and 3 were also influential, but later stages primarily improve speaker fidelity rather than semantic accuracy. This confirms that the initial stages are most crucial.
       </p>
 
+      <!-- Audio Samples for Importance Analysis -->
+      <p class="text-gray-700 mb-4">
+        Below are sample audios where particular stages (1, 2, and 5) are deleted. Observe how removing earlier stages heavily impacts intelligibility and overall quality.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div class="audio-sample">
+          <p class="font-medium mb-2">Deleting Stage 1</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Most critical stage removed, major drop in semantic & acoustic fidelity.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/ImportanceAnalysis/stage1.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">Deleting Stage 2</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Next most important, moderate effect on speech quality.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/ImportanceAnalysis/stage2.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">Deleting Stage 5</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Later stage primarily affects speaker similarity and timbre.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/ImportanceAnalysis/stage5.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+
       <!-- 4) Sort-Match Strategy Analysis -->
       <h3 id="sort-match" class="subsection-title">4) Sort-Match Strategy Analysis</h3>
       <p class="text-gray-700 mb-4">
         To address frequency-selective fading, we propose sorting data streams by importance (phonemes as highest priority, followed by each codec stage) and matching them to sub-carriers with corresponding gains. Compared with random allocation, our sort-match strategy consistently yields lower CER and WER and maintains higher speaker similarity, even at low SNR.
       </p>
 
-      <!-- Audio Samples (moved under Sort-Match Strategy Analysis) -->
+      <!-- Audio Samples for Sort-Match Strategy Analysis -->
       <p class="text-gray-700 mb-4">
         Below are some audio samples illustrating the impact of the sort-match strategy at different SNR levels, compared to the random-match strategy. Listen for differences in intelligibility and speaker clarity.
       </p>
@@ -276,12 +390,90 @@
         </div>
       </div>
 
-
       <!-- 5) Comparison With Other Models -->
       <h3 id="comparison-models" class="subsection-title">5) Comparison With Other Models</h3>
       <p class="text-gray-700 mb-4">
         We benchmark ZeroSC-SR against EnCodec, DeepSC-S, and LPC. Our system achieves the highest compression ratio while maintaining robust performance in low-power conditions. Though all systems converge at high power levels, ZeroSC-SR demonstrates clear advantages in challenging environments where both semantic content and speaker fidelity are crucial.
       </p>
+
+      <!-- Audio Samples for Comparison With Other Models -->
+      <p class="text-gray-700 mb-4">
+        Below are placeholder samples comparing ZeroSC-SR, EnCodec, and LPC at different power levels. Note how ZeroSC-SR retains quality at lower power, while EnCodec and LPC may require higher power to achieve comparable fidelity.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- ZeroSC-SR (1W, 10W, 100W) -->
+        <div class="audio-sample">
+          <p class="font-medium mb-2">ZeroSC-SR @ 1W</p>
+          <audio controls class="w-full">
+            <source src="audio/Comparison/ZeroSC-SR_1W.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">ZeroSC-SR @ 10W</p>
+          <audio controls class="w-full">
+            <source src="audio/Comparison/ZeroSC-SR_10W.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">ZeroSC-SR @ 100W</p>
+          <audio controls class="w-full">
+            <source src="audio/Comparison/ZeroSC-SR_100W.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <!-- EnCodec (1W, 10W, 100W) -->
+        <div class="audio-sample">
+          <p class="font-medium mb-2">EnCodec @ 1W</p>
+          <audio controls class="w-full">
+            <source src="audio/Comparison/EnCodec_1W.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">EnCodec @ 10W</p>
+          <audio controls class="w-full">
+            <source src="audio/Comparison/EnCodec_10W.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">EnCodec @ 100W</p>
+          <audio controls class="w-full">
+            <source src="audio/Comparison/EnCodec_100W.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <!-- LPC (10^3 W, 10^4 W, 10^5 W) -->
+        <div class="audio-sample">
+          <p class="font-medium mb-2">LPC @ 10^3 W</p>
+          <audio controls class="w-full">
+            <source src="audio/Comparison/LPC_1e3W.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">LPC @ 10^4 W</p>
+          <audio controls class="w-full">
+            <source src="audio/Comparison/LPC_1e4W.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">LPC @ 10^5 W</p>
+          <audio controls class="w-full">
+            <source src="audio/Comparison/LPC_1e5W.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
     </section>
 
     <!-- Code -->
