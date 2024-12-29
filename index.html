@@ -121,7 +121,7 @@
           <strong>Novel Sort-Match Strategy:</strong> Allocates subcarriers by ranking data importance to enhance performance in frequency-selective fading channels, outperforming prior frequency-flat fading assumptions.
         </li>
         <li>
-          <strong>Efficient Integration with Digital Communication:</strong> Replaces traditional mel spectrograms with audio codec codes for intermediate representation, reducing transmitted data size. Also, incorporates VALL-E for zero-shot speaker adaptation.
+          <strong>Efficient Integration with Digital Communication:</strong> Replaces traditional mel spectrograms with audio codec codes for intermediate representation, reducing transmitted data size and incorporating VALL-E for zero-shot speaker adaptation.
         </li>
       </ul>
       
@@ -192,18 +192,18 @@
       <!-- 1) Prompt Length -->
       <h3 id="prompt-length" class="subsection-title">1) Prompt Length</h3>
       <p class="text-gray-700 mb-4">
-        We analyze the prompt length in the context of the <em>whole ZeroSC-SR system</em> (including reconstruction), not just isolated recognition. Shorter prompts often lack sufficient acoustic clues, yielding lower speaker similarity and higher error rates. Our results show that, although extending the prompt length can reduce errors, after about 2 seconds the improvements slow down, making 2 seconds a balanced choice for system performance and efficiency.
+        We analyze the prompt length in the context of the <em>entire ZeroSC-SR system</em> output (including final reconstruction). Shorter prompts tend to lack sufficient acoustic clues for speaker identity, and can raise error rates. While longer prompts can lower errors, the benefit plateaus after about 2 seconds, balancing system performance with transmission efficiency.
       </p>
 
       <!-- Audio Samples for Prompt Length -->
       <p class="text-gray-700 mb-4">
-        Below are placeholder audio samples of the complete system output at different prompt lengths (1s, 2s, and 3s). Listen for changes in speaker fidelity and overall intelligibility.
+        Below are placeholder audio samples from the final system output at different prompt lengths (1s, 2s, and 3s). Notice differences in intelligibility and speaker fidelity.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div class="audio-sample">
           <p class="font-medium mb-2">Prompt = 1s</p>
           <p class="text-sm text-gray-600 mb-2">
-            Short prompt may yield incomplete words or missing acoustic cues.
+            Short prompt can omit critical acoustic cues and cause higher WER/CER.
           </p>
           <audio controls class="w-full">
             <source src="audio/PromptLength/1s.wav" type="audio/wav">
@@ -213,7 +213,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">Prompt = 2s</p>
           <p class="text-sm text-gray-600 mb-2">
-            Balanced prompt length for semantic + acoustic representation.
+            Balanced prompt length for semantic understanding and speaker features.
           </p>
           <audio controls class="w-full">
             <source src="audio/PromptLength/2s.wav" type="audio/wav">
@@ -223,7 +223,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">Prompt = 3s</p>
           <p class="text-sm text-gray-600 mb-2">
-            Longer prompt can improve fidelity but increases data overhead.
+            Longer prompt can improve clarity but raises data overhead.
           </p>
           <audio controls class="w-full">
             <source src="audio/PromptLength/3s.wav" type="audio/wav">
@@ -235,47 +235,78 @@
       <!-- 2) Phonemes vs. Acoustic Features -->
       <h3 id="phoneme-acoustic" class="subsection-title">2) Phonemes vs. Acoustic Features</h3>
       <p class="text-gray-700 mb-4">
-        In ZeroSC-SR, we transmit both <strong>phoneme information</strong> (conveying semantic content) and <strong>acoustic features</strong> (audio codec codes that capture speaker and prosodic details). We evaluate how noise affects each data type:
+        ZeroSC-SR simultaneously handles <strong>phoneme transmission</strong> (carrying semantic content) and <strong>acoustic feature transmission</strong> (audio codec codes capturing speaker characteristics). To illustrate their sensitivity to channel noise, we provide separate audio samples at 0 dB, 5 dB, and 10 dB for each transmission type:
       </p>
       <ul class="list-disc list-inside text-gray-700 mb-4 ml-4">
-        <li>
-          <strong>Phoneme Transmission:</strong> High noise levels significantly degrade CER/WER, as garbled phonemes lead to incorrect semantic understanding.
-        </li>
-        <li>
-          <strong>Acoustic Feature Transmission:</strong> Preserving speaker identity and nuances requires sufficient SNR for audio codec codes; speaker similarity drops quickly if these features are distorted.
-        </li>
+        <li><strong>Phonemes:</strong> Errors in phoneme data severely affect CER/WER.</li>
+        <li><strong>Acoustic Features:</strong> Distorted codes lead to loss of speaker identity and prosodic details.</li>
       </ul>
-      <p class="text-gray-700 mb-4">
-        Below are placeholders demonstrating system outputs at three noise levels (0 dB, 5 dB, and 10 dB). In each audio, consider how well the <em>semantic content (phonemes)</em> and the <em>speaker-specific acoustic features</em> are preserved.
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+
+      <!-- Audio Samples for Phoneme Transmission -->
+      <p class="font-semibold mt-4 mb-2 text-gray-800">Phoneme Transmission Only</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 0 dB</p>
           <p class="text-sm text-gray-600 mb-2">
-            Extremely noisy: phonemes + acoustic features likely severely degraded.
+            Extremely noisy, high chance of phoneme errors and semantic loss.
           </p>
           <audio controls class="w-full">
-            <source src="audio/PhonemeAcoustic/0dB.wav" type="audio/wav">
+            <source src="audio/PhonemeAcoustic/phoneme_0dB.wav" type="audio/wav">
             Your browser does not support the audio element.
           </audio>
         </div>
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 5 dB</p>
           <p class="text-sm text-gray-600 mb-2">
-            Moderate noise: semantic errors may occur; partial speaker fidelity remains.
+            Moderate noise, phoneme errors still possible but partially mitigated.
           </p>
           <audio controls class="w-full">
-            <source src="audio/PhonemeAcoustic/5dB.wav" type="audio/wav">
+            <source src="audio/PhonemeAcoustic/phoneme_5dB.wav" type="audio/wav">
             Your browser does not support the audio element.
           </audio>
         </div>
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 10 dB</p>
           <p class="text-sm text-gray-600 mb-2">
-            Less noise: better preservation of both semantic and acoustic features.
+            Less noise, higher semantic accuracy in phoneme decoding.
           </p>
           <audio controls class="w-full">
-            <source src="audio/PhonemeAcoustic/10dB.wav" type="audio/wav">
+            <source src="audio/PhonemeAcoustic/phoneme_10dB.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+
+      <!-- Audio Samples for Acoustic Feature Transmission -->
+      <p class="font-semibold mt-4 mb-2 text-gray-800">Acoustic Feature Transmission Only</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 0 dB</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Extremely noisy channel for acoustic codes, speaker identity severely distorted.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/PhonemeAcoustic/acoustic_0dB.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 5 dB</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Moderate noise, some speaker nuances remain but noticeable artifacts.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/PhonemeAcoustic/acoustic_5dB.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 10 dB</p>
+          <p class="text-sm text-gray-600 mb-2">
+            Cleaner channel, closer to original voice quality and prosody.
+          </p>
+          <audio controls class="w-full">
+            <source src="audio/PhonemeAcoustic/acoustic_10dB.wav" type="audio/wav">
             Your browser does not support the audio element.
           </audio>
         </div>
@@ -284,16 +315,16 @@
       <!-- 3) Importance Analysis of Acoustic Features -->
       <h3 id="importance-analysis" class="subsection-title">3) Importance Analysis of Acoustic Features</h3>
       <p class="text-gray-700 mb-4">
-        A deletion-based experiment on the 8-stage audio codec codes reveals that some stages carry more critical information. Removing Stage 1, for instance, severely degrades recognition accuracy and speaker similarity, while dropping higher stages (like Stage 5) mainly affects finer acoustic details.
+        A deletion-based experiment on the 8-stage audio codec codes reveals certain stages carry more critical information. Removing Stage 1, for example, severely degrades recognition accuracy and speaker similarity, while dropping Stage 5 affects finer details like timbre.
       </p>
       <p class="text-gray-700 mb-4">
-        Below are sample audios of the <em>final reconstructed speech</em> when certain stages are removed. Notice how removing earlier stages dramatically impacts both semantic clarity and acoustic fidelity, whereas omitting later stages affects quality more subtly.
+        Below are final reconstructed samples when specific stages are removed. Notice how losing early stages impacts semantic clarity <em>and</em> acoustic identity, while dropping later stages primarily influences fine-grained quality.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div class="audio-sample">
           <p class="font-medium mb-2">Deleting Stage 1</p>
           <p class="text-sm text-gray-600 mb-2">
-            Most critical stage removed, large drop in semantic + acoustic fidelity.
+            Most crucial data lost, major drop in intelligibility and speaker fidelity.
           </p>
           <audio controls class="w-full">
             <source src="audio/ImportanceAnalysis/stage1.wav" type="audio/wav">
@@ -303,7 +334,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">Deleting Stage 2</p>
           <p class="text-sm text-gray-600 mb-2">
-            Still an important stage, moderate effect on speech quality.
+            Still high-impact data; moderate degradation in clarity.
           </p>
           <audio controls class="w-full">
             <source src="audio/ImportanceAnalysis/stage2.wav" type="audio/wav">
@@ -313,7 +344,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">Deleting Stage 5</p>
           <p class="text-sm text-gray-600 mb-2">
-            Later stage: primarily affects fine acoustic details, e.g., timbre.
+            Affects finer acoustic cues and timbre, but preserves core semantics.
           </p>
           <audio controls class="w-full">
             <source src="audio/ImportanceAnalysis/stage5.wav" type="audio/wav">
@@ -325,19 +356,19 @@
       <!-- 4) Sort-Match Strategy Analysis -->
       <h3 id="sort-match" class="subsection-title">4) Sort-Match Strategy Analysis</h3>
       <p class="text-gray-700 mb-4">
-        To address frequency-selective fading, we propose sorting data streams by importance (e.g., phonemes and earlier codec stages first) and matching them to sub-carriers with higher gains. Compared with random allocation, our sort-match strategy consistently yields lower CER/WER and maintains higher speaker similarity, even under low SNR conditions.
+        To address frequency-selective fading, we propose sorting data streams by importance (e.g., phonemes and earlier codec stages first) and matching them to sub-carriers with higher gains. Compared with random allocation, our sort-match strategy consistently yields lower CER/WER and maintains higher speaker similarity, especially under low SNR conditions.
       </p>
 
       <!-- Audio Samples for Sort-Match Strategy Analysis -->
       <p class="text-gray-700 mb-4">
-        Below are audio samples demonstrating the final speech at different SNRs for Sort-Match vs. Random-Match. Listen carefully for semantic clarity and speaker consistency.
+        Below are system outputs at different SNRs for Sort-Match vs. Random-Match. Pay attention to both semantic clarity and speaker consistency.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- SNR = 5 dB -->
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 5 dB: Sort-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Prioritized data gets better subcarriers; improved intelligibility under noise.
+            Prioritized data on higher-gain subcarriers yields better intelligibility under noise.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/sort/SNR5/121_127105_000016_000006.wav" type="audio/wav">
@@ -347,7 +378,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 5 dB: Random-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            No priority, leading to more errors and worse speaker fidelity.
+            Data is allocated arbitrarily; expect more errors and degraded speaker fidelity.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/random/SNR5/121_127105_000016_000006.wav" type="audio/wav">
@@ -359,7 +390,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 10 dB: Sort-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Better channel conditions help preserve both semantic and acoustic features.
+            Improved channel conditions preserve both semantic and acoustic cues.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/sort/SNR10/121_127105_000016_000006.wav" type="audio/wav">
@@ -369,7 +400,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 10 dB: Random-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Artifacts remain due to uncoordinated resource allocation.
+            Random allocation still introduces artifacts; less consistent speech quality.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/random/SNR10/121_127105_000016_000006.wav" type="audio/wav">
@@ -381,7 +412,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 15 dB: Sort-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            High SNR with prioritized allocation: near-original clarity and speaker identity.
+            High SNR plus sorted data yields near-original clarity.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/sort/SNR15/121_127105_000016_000006.wav" type="audio/wav">
@@ -391,7 +422,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 15 dB: Random-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Though conditions are better, random matching still lags in quality vs. sort-match.
+            Even with good channel quality, random approach lags in fidelity.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/random/SNR15/121_127105_000016_000006.wav" type="audio/wav">
@@ -403,12 +434,12 @@
       <!-- 5) Comparison With Other Models -->
       <h3 id="comparison-models" class="subsection-title">5) Comparison With Other Models</h3>
       <p class="text-gray-700 mb-4">
-        We benchmark ZeroSC-SR against EnCodec, DeepSC-S, and LPC. Our system achieves the highest compression ratio while maintaining robust performance in low-power conditions. Though all systems converge at high power levels, ZeroSC-SR excels when channel quality is poor, effectively retaining both semantic content and speaker identity.
+        We benchmark ZeroSC-SR against EnCodec, DeepSC-S, and LPC. Our system achieves the highest compression ratio while maintaining robust performance in low-power conditions. Though all systems converge at high power levels, ZeroSC-SR excels in challenging environments, retaining both semantic content and speaker identity when channel quality is poor.
       </p>
 
       <!-- Audio Samples for Comparison With Other Models -->
       <p class="text-gray-700 mb-4">
-        Below are placeholders comparing ZeroSC-SR, EnCodec, and LPC at varying power levels. Note how ZeroSC-SR maintains high clarity at lower power, whereas EnCodec and LPC typically require higher power to approach similar fidelity.
+        Below are placeholder samples comparing ZeroSC-SR, EnCodec, and LPC at different power levels. Observe how ZeroSC-SR preserves clarity at lower power, whereas EnCodec and LPC generally require higher power to achieve comparable performance.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- ZeroSC-SR (1W, 10W, 100W) -->
