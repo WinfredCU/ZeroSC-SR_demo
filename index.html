@@ -10,7 +10,6 @@
     .audio-sample {
       margin: 10px 0;
     }
-    /* Optionally add some custom styling */
     .section-title {
       @apply text-2xl font-bold mb-4;
     }
@@ -28,7 +27,7 @@
     <!-- Header -->
     <header class="text-center mb-12">
       <h1 class="text-4xl font-bold mb-4">ZeroSC-SR: Leveraging Data Importance for Efficient Semantic Speech Communication</h1>
-      <div class="flex flex-wrap justify-center gap-4 mb-6">
+      <div class="flex flex-wrap justify-center gap-4 mb-2">
         <div class="text-center">
           <p class="font-medium">Zewei Wang</p>
         </div>
@@ -45,10 +44,32 @@
           <p class="font-medium">Tat Ming Lok</p>
         </div>
       </div>
+      <p class="text-sm text-gray-600">
+        Contact: <span class="font-medium">Zewei Wang</span> (<em>zwwong at link.cuhk.edu.hk</em>)
+      </p>
     </header>
 
+    <!-- Table of Contents -->
+    <nav class="mb-12 bg-white border rounded p-4 shadow">
+      <h2 class="text-xl font-bold mb-4">Table of Contents</h2>
+      <ul class="list-disc list-inside text-gray-700 ml-4">
+        <li><a href="#abstract" class="text-blue-600 hover:underline">Abstract</a></li>
+        <li><a href="#proposed-system" class="text-blue-600 hover:underline">Proposed System</a></li>
+        <li><a href="#experiment-results" class="text-blue-600 hover:underline">Experiment and Numerical Results</a>
+          <ul class="list-decimal list-inside ml-6">
+            <li><a href="#prompt-length" class="text-blue-600 hover:underline">Prompt Length</a></li>
+            <li><a href="#phoneme-acoustic" class="text-blue-600 hover:underline">Phonemes vs. Acoustic Features</a></li>
+            <li><a href="#importance-analysis" class="text-blue-600 hover:underline">Importance Analysis of Acoustic Features</a></li>
+            <li><a href="#sort-match" class="text-blue-600 hover:underline">Sort-Match Strategy Analysis</a></li>
+            <li><a href="#comparison-models" class="text-blue-600 hover:underline">Comparison with Other Models</a></li>
+          </ul>
+        </li>
+        <li><a href="#code" class="text-blue-600 hover:underline">Code</a></li>
+      </ul>
+    </nav>
+
     <!-- Abstract -->
-    <section class="mb-12">
+    <section id="abstract" class="mb-12">
       <h2 class="section-title">Abstract</h2>
       <p class="text-gray-700">
         Advancements in artificial intelligence have enabled the development of more efficient and semantic-aware speech communication systems. 
@@ -60,34 +81,8 @@
       </p>
     </section>
 
-    <!-- Introduction -->
-    <section class="mb-12">
-      <h2 class="section-title">Introduction</h2>
-      <p class="text-gray-700 mb-4">
-        Traditional speech communication systems rely on methods such as Pulse Code Modulation&nbsp;(PCM) and Linear Predictive Coding&nbsp;(LPC) to represent and transmit audio signals&nbsp;[1][2]. PCM achieves high fidelity by sampling the analog signal at a high rate, resulting in large data sizes&nbsp;[1]. LPC, on the other hand, compresses data by modeling the vocal tract and predicting speech samples, reducing the bit rate but potentially sacrificing some audio quality&nbsp;[3]. While effective for transmitting high-quality audio, these methods focus on precise waveform reproduction without considering the semantic content of speech&nbsp;[4], which can be inefficient when conveying meaning is the primary objective&nbsp;[5][6][7].
-      </p>
-      <p class="text-gray-700 mb-4">
-        Advances in artificial intelligence&nbsp;(AI) have opened new possibilities for improving speech communication systems. Speech, as a primary medium for human interaction, contains rich acoustic and semantic information&nbsp;[8][9][10][11]. AI techniques such as convolutional neural networks&nbsp;(CNNs), bidirectional long short-term memory&nbsp;(BLSTM) networks, and Transformer models&nbsp;[12][13][14] have proven effective in processing and understanding these complex features, enabling novel approaches that focus on transmitting semantic information rather than raw audio signals.
-      </p>
-      <p class="text-gray-700 mb-4">
-        Building on these advancements, the paradigm of semantic communication has emerged, focusing on efficient speech transmission by prioritizing meaning over exact signal reproduction. Unlike traditional methods&nbsp;[1][2][3], the semantic communication system prioritizes the extraction and transmission of information necessary for understanding, employing machine learning&nbsp;(ML) techniques to identify and transmit critical acoustic and semantic features&nbsp;[5][6][7]. By shifting the focus from bit-level accuracy to effectively conveying meaning, these systems reduce the amount of transmitted data while maintaining intelligibility and perceived quality&nbsp;[15][16].
-      </p>
-      <p class="text-gray-700 mb-4">
-        Within semantic speech communication, two primary approaches have been explored: <em>End-to-End Speech Transmission</em> and <em>Text-to-Speech Synthesis</em>. The former encodes features directly from the speech signal to reconstruct the waveform at the receiver&nbsp;[17][18]. For example, the DeepSC-S system&nbsp;[17] utilizes an attention-based encoder-decoder architecture to extract and transmit meaningful features. However, <em>End-to-End Speech Transmission</em> often encounters challenges in preserving semantic accuracy and reliably conveying the intended message under adverse conditions, as evidenced by its relatively high Word Error Rate (WER).
-      </p>
-      <p class="text-gray-700 mb-4">
-        On the other hand, the <em>Text-to-Speech Synthesis</em> approach&nbsp;[19][20] transmits text or text-related features, supplemented by acoustic information, with speech synthesis performed at the receiver. While this approach achieves bandwidth efficiency, it often requires additional speaker identity or acoustic data to reconstruct speaker characteristics at the receiver, limiting its applicability. Moreover, existing works often rely on simplified channel assumptions such as additive white Gaussian noise (AWGN) or frequency-flat fading, making them less robust in practical wide-bandwidth scenarios.
-      </p>
-      <p class="text-gray-700 mb-4">
-        In response to these challenges, this paper proposes a novel semantic speech communication system that effectively transmits semantic and acoustic features under the frequency-selective fading channel. We convert input speech into phoneme IDs to compactly represent semantic content, while a short segment of the original speech is used as a prompt to capture acoustic features via the EnCodec model&nbsp;[21]. We analyze the attributes of the intermediate transmission data and propose a <em>sort-match strategy</em> to enhance transmission efficiency under frequency-selective fading. The channel decoder then recovers phoneme sequences and prompt codec codes, with the VALL-E model&nbsp;[22] predicting extended audio codec codes for final speech reconstruction. 
-      </p>
-      <p class="text-gray-700 mb-4">
-        Extensive experiments validate the feasibility of our ZeroSC-SR system and the effectiveness of the proposed sort-match strategy. Results show that ZeroSC-SR outperforms conventional systems in challenging environments, achieving lower CER and higher speaker similarity scores, particularly under low-power and noisy conditions. Our primary contributions include a zero-shot semantic communication framework, analysis of prompt lengths, data importance evaluation, and robust integration with digital communication systems.     
-      </p>
-    </section>
-
     <!-- Proposed System -->
-    <section class="mb-12">
+    <section id="proposed-system" class="mb-12">
       <h2 class="section-title">Proposed System</h2>
       <p class="text-gray-700 mb-4">
         The ZeroSC-SR system introduces a cutting-edge approach to semantic speech communication, addressing challenges in transmitting speech over frequency-selective fading channels. By combining phoneme-based semantic transmission with advanced audio codec compression, the system achieves efficient data transmission and robust performance under adverse conditions.
@@ -111,7 +106,7 @@
       <h3 class="subsection-title">Main Contributions</h3>
       <ul class="list-disc list-inside text-gray-700 mb-4">
         <li>
-          <strong>Innovative Zero-Shot Semantic Communication System:</strong> Enables efficient digital transmission of both phonemes and acoustic features over frequency-selective fading channels, achieving a high compression ratio and superior performance.
+          <strong>Innovative Zero-Shot Semantic Communication System:</strong> Enables efficient digital transmission of both phonemes and acoustic features over frequency-selective fading channels.
         </li>
         <li>
           <strong>Trade-off Analysis Between Prompt Length and Performance:</strong> Evaluates the influence of prompt length on recognition accuracy and system performance, identifying a practical trade-off between energy efficiency and performance.
@@ -123,7 +118,7 @@
           <strong>Novel Sort-Match Strategy:</strong> Allocates subcarriers by ranking data importance to enhance performance in frequency-selective fading channels, outperforming prior frequency-flat fading assumptions.
         </li>
         <li>
-          <strong>Efficient Integration with Digital Communication:</strong> Replaces traditional mel spectrograms with audio codec codes for intermediate representation, reducing transmitted data size. Incorporates VALL-E for zero-shot synthesis, enabling speech reconstruction for unseen speakers.
+          <strong>Efficient Integration with Digital Communication:</strong> Replaces traditional mel spectrograms with audio codec codes for intermediate representation, reducing transmitted data size, and incorporates VALL-E for zero-shot speaker adaptation.
         </li>
       </ul>
       
@@ -133,103 +128,92 @@
       </figure>
     </section>
 
-
     <!-- Experiment and Numerical Results -->
-    <section class="mb-12">
+    <section id="experiment-results" class="mb-12">
       <h2 class="section-title">Experiment and Numerical Results</h2>
       <p class="text-gray-700 mb-6">
-        The performance of the proposed system is evaluated under varying channel conditions, assuming perfect channel state information. Experiments are conducted using the Libri-light dataset&nbsp;[23] on an NVIDIA RTX A4000. The evaluation metrics, including the CER, WER&nbsp;[24], and speaker similarity&nbsp;[25], provide insights into the system’s semantic understanding and speaker fidelity. Table&nbsp;1 (below) lists the key experimental parameters.
+        The performance of the proposed system is evaluated under varying channel conditions, assuming perfect channel state information. Experiments are conducted using the Libri-light dataset on an NVIDIA RTX A4000. Metrics such as Character Error Rate (CER), Word Error Rate (WER), and speaker similarity provide insights into semantic understanding and speaker fidelity. The table below lists key experimental parameters.
       </p>
 
-      <!-- Experiment Parameters Table (Optional Example) -->
+      <!-- Experiment Parameters Table -->
       <div class="overflow-auto mb-6">
         <table class="min-w-full bg-white border border-gray-300 text-gray-700">
           <thead class="bg-gray-100 border-b">
             <tr>
               <th class="py-2 px-4 text-left">Parameter</th>
               <th class="py-2 px-4 text-left">Value</th>
-              <th class="py-2 px-4 text-left">Relevant Sections</th>
+              <th class="py-2 px-4 text-left">Note/Sections</th>
             </tr>
           </thead>
           <tbody>
             <tr class="border-b">
               <td class="py-2 px-4">Error Control Coding</td>
               <td class="py-2 px-4">LDPC</td>
-              <td class="py-2 px-4">–</td>
+              <td class="py-2 px-4">---</td>
             </tr>
             <tr class="border-b">
               <td class="py-2 px-4">Modulation Scheme</td>
               <td class="py-2 px-4">4-QAM</td>
-              <td class="py-2 px-4">–</td>
+              <td class="py-2 px-4">---</td>
             </tr>
             <tr class="border-b">
               <td class="py-2 px-4">Input Speech Length</td>
               <td class="py-2 px-4">~10 seconds</td>
-              <td class="py-2 px-4">–</td>
+              <td class="py-2 px-4">---</td>
             </tr>
             <tr class="border-b">
               <td class="py-2 px-4">Prompt Length</td>
               <td class="py-2 px-4">2 seconds</td>
-              <td class="py-2 px-4">Sec. IV.A</td>
+              <td class="py-2 px-4"><a href="#prompt-length" class="text-blue-600 hover:underline">Sec. IV.A</a></td>
             </tr>
             <tr class="border-b">
               <td class="py-2 px-4">SNR Range</td>
               <td class="py-2 px-4">[-5, 15] dB</td>
-              <td class="py-2 px-4">Sec. IV.B</td>
+              <td class="py-2 px-4"><a href="#phoneme-acoustic" class="text-blue-600 hover:underline">Sec. IV.B</a></td>
             </tr>
             <tr class="border-b">
               <td class="py-2 px-4">Stages in Audio Codec Codes</td>
               <td class="py-2 px-4">8</td>
-              <td class="py-2 px-4">Sec. IV.C</td>
+              <td class="py-2 px-4"><a href="#importance-analysis" class="text-blue-600 hover:underline">Sec. IV.C</a></td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <!-- 1) Prompt Length -->
-      <h3 class="subsection-title">1) Prompt Length</h3>
+      <h3 id="prompt-length" class="subsection-title">1) Prompt Length</h3>
       <p class="text-gray-700 mb-4">
-        The length of the transmitted prompt impacts both system performance and the required transmission resources. We aim to determine an appropriate prompt length that reduces resource usage while maintaining satisfactory performance. 
-        Experimental results show that increasing the prompt length reduces recognition errors (CER/WER), stabilizing around 2 seconds. After 2 seconds, the decrease in error rates slows, indicating diminishing returns. From a practical standpoint, 2 seconds of prompt length is a sweet spot for balancing performance and transmission efficiency.
+        The length of the transmitted prompt impacts both system performance and the required transmission resources. We aim to determine an appropriate prompt length that reduces resource usage while maintaining satisfactory performance. Experimental results show that increasing the prompt length reduces recognition errors (CER/WER), stabilizing around 2 seconds. After 2 seconds, returns diminish, making 2 seconds a good balance between performance and efficiency.
       </p>
 
       <!-- 2) Phonemes vs. Acoustic Features -->
-      <h3 class="subsection-title">2) Phonemes vs. Acoustic Features</h3>
+      <h3 id="phoneme-acoustic" class="subsection-title">2) Phonemes vs. Acoustic Features</h3>
       <p class="text-gray-700 mb-4">
-        We further investigate the sensitivity of phoneme transmission and acoustic feature transmission to channel noise. Phoneme accuracy significantly affects CER and WER, whereas acoustic features primarily influence speaker similarity. Our findings highlight that ensuring high SNR for phoneme data is crucial for comprehension, while acoustic features require relatively good SNR to maintain speaker fidelity.
+        We further investigate the sensitivity of phoneme transmission and acoustic feature transmission to channel noise. Phoneme accuracy significantly affects CER and WER, whereas acoustic features primarily influence speaker similarity. Results indicate that phonemes need higher SNR to preserve semantic content, while acoustic features require decent SNR to maintain speaker fidelity.
       </p>
 
       <!-- 3) Importance Analysis of Acoustic Features -->
-      <h3 class="subsection-title">3) Importance Analysis of Acoustic Features</h3>
+      <h3 id="importance-analysis" class="subsection-title">3) Importance Analysis of Acoustic Features</h3>
       <p class="text-gray-700 mb-4">
-        We performed a deletion-based experiment on the 8-stage audio codec codes. Removing Stage 1 caused the largest drop in performance across WER, CER, and speaker similarity. Stages 2 and 3 remained influential, while later stages contributed primarily to speaker fidelity. This indicates a descending order of importance from Stage 1 to Stage 8.
+        We performed a deletion-based experiment on the 8-stage audio codec codes. Removing Stage 1 caused the largest drop in performance across WER, CER, and speaker similarity. Stages 2 and 3 were also influential, but later stages primarily improve speaker fidelity rather than semantic accuracy. This confirms that the initial stages are most crucial.
       </p>
 
       <!-- 4) Sort-Match Strategy Analysis -->
-      <h3 class="subsection-title">4) Sort-Match Strategy Analysis</h3>
+      <h3 id="sort-match" class="subsection-title">4) Sort-Match Strategy Analysis</h3>
       <p class="text-gray-700 mb-4">
-        To address frequency-selective fading, we propose sorting data streams by importance (phonemes as highest priority, followed by codec stages) and matching them to sub-carriers with corresponding gains. Compared with a random allocation, our sort-match strategy yields significantly lower WER and CER across all tested SNRs, maintaining high speaker similarity even at low SNR.
+        To address frequency-selective fading, we propose sorting data streams by importance (phonemes as highest priority, followed by each codec stage) and matching them to sub-carriers with corresponding gains. Compared with random allocation, our sort-match strategy consistently yields lower CER and WER and maintains higher speaker similarity, even at low SNR.
       </p>
 
-      <!-- 5) Comparison With Other Models -->
-      <h3 class="subsection-title">5) Comparison With Other Models</h3>
+      <!-- Audio Samples (moved under Sort-Match Strategy Analysis) -->
       <p class="text-gray-700 mb-4">
-        We benchmark ZeroSC-SR against EnCodec&nbsp;[21], DeepSC-S&nbsp;[17], and LPC&nbsp;[3]. Our system achieves the highest compression ratio (nearly 387 for 10 seconds of speech) and maintains robust performance at low power levels. Although performance converges at high power levels, ZeroSC-SR proves superior in challenging conditions, balancing semantic understanding and speaker similarity with minimal data transmission.
-      </p>
-    </section>
-
-    <!-- Audio Samples -->
-    <section class="mb-12">
-      <h2 class="section-title">Audio Samples</h2>
-      <p class="text-gray-700 mb-4">
-        Below are audio examples demonstrating the effect of different channel strategies (Sort-Match vs. Random-Match) and varying SNR values. We encourage you to listen for differences in speech intelligibility and speaker fidelity.
+        Below are some audio samples illustrating the impact of the sort-match strategy at different SNR levels, compared to the random-match strategy. Listen for differences in intelligibility and speaker clarity.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- SNR = 5 dB -->
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 5 dB: Sort-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Here, critical data (phonemes, early codec stages) are matched to better subcarriers. Listen for improved intelligibility in low-SNR conditions.
+            Critical data (phonemes, early codec stages) get better subcarriers. Notice better intelligibility in severe noise.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/sort/SNR5/121_127105_000016_000006.wav" type="audio/wav">
@@ -239,7 +223,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 5 dB: Random-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Data streams are randomly assigned to subcarriers. Notice higher distortion and reduced speaker clarity.
+            Random assignment leads to more pronounced errors and distortion.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/random/SNR5/121_127105_000016_000006.wav" type="audio/wav">
@@ -251,7 +235,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 10 dB: Sort-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Moderate channel quality allows better fidelity, especially when data importance is prioritized.
+            Improved channel quality helps preserve both semantic and acoustic features.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/sort/SNR10/121_127105_000016_000006.wav" type="audio/wav">
@@ -261,7 +245,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 10 dB: Random-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Random assignment can still produce audible artifacts and occasional errors.
+            Artifacts remain evident without prioritizing important data.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/random/SNR10/121_127105_000016_000006.wav" type="audio/wav">
@@ -273,7 +257,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 15 dB: Sort-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Higher SNR highlights the sort-match strategy's ability to preserve speaker characteristics.
+            High SNR with sort-match preserves speaker identity and clarity.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/sort/SNR15/121_127105_000016_000006.wav" type="audio/wav">
@@ -283,7 +267,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 15 dB: Random-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Although channel quality improves, random allocation still falls behind in clarity compared to sort-match.
+            Even at higher SNR, random assignment lags in fidelity compared to sort-match.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/random/SNR15/121_127105_000016_000006.wav" type="audio/wav">
@@ -291,10 +275,17 @@
           </audio>
         </div>
       </div>
+
+
+      <!-- 5) Comparison With Other Models -->
+      <h3 id="comparison-models" class="subsection-title">5) Comparison With Other Models</h3>
+      <p class="text-gray-700 mb-4">
+        We benchmark ZeroSC-SR against EnCodec, DeepSC-S, and LPC. Our system achieves the highest compression ratio while maintaining robust performance in low-power conditions. Though all systems converge at high power levels, ZeroSC-SR demonstrates clear advantages in challenging environments where both semantic content and speaker fidelity are crucial.
+      </p>
     </section>
 
     <!-- Code -->
-    <section class="mb-12">
+    <section id="code" class="mb-12">
       <h2 class="section-title">Code</h2>
       <p class="text-gray-700 mb-4">
         The complete source code for ZeroSC-SR is publicly available. Feel free to clone the repository and follow the instructions in the README to reproduce our experiments and audio demonstrations.
@@ -304,12 +295,9 @@
       </a>
     </section>
 
-    <!-- Footer (Optional) -->
+    <!-- Footer -->
     <footer class="mt-12 text-center text-gray-500 text-sm">
       <p class="mb-2">
-        For any questions or feedback, please contact the authors.
-      </p>
-      <p>
         &copy; 2024 ZeroSC-SR Team
       </p>
     </footer>
