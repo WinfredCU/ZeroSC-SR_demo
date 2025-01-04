@@ -256,7 +256,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">Prompt = 1s</p>
           <p class="text-sm text-gray-600 mb-2">
-            Short prompt can omit critical acoustic cues and cause higher WER/CER.
+             For prompts under two seconds, insufficient acoustic cues and higher recognition errors degrade performance.
           </p>
           <audio controls class="w-full">
             <source src="audio/Length/1s/121_127105_000008_000000.wav" type="audio/wav" />
@@ -266,7 +266,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">Prompt = 2s</p>
           <p class="text-sm text-gray-600 mb-2">
-            Balanced prompt length for semantic understanding and speaker features.
+            A 2-second prompt balances performance and efficiency. 
           </p>
           <audio controls class="w-full">
             <source src="audio/Length/2s/121_127105_000008_000000.wav" type="audio/wav" />
@@ -276,7 +276,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">Prompt = 3s</p>
           <p class="text-sm text-gray-600 mb-2">
-            Longer prompt can improve clarity but raises data overhead.
+            For prompts longer than two seconds, the prompt provides sufficient information and the recognition accuracy is high, resulting in excellent overall performance.
           </p>
           <audio controls class="w-full">
             <source src="audio/Length/3s/121_127105_000008_000000.wav" type="audio/wav" />
