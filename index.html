@@ -134,7 +134,7 @@
         </li>
         <li>
           <strong>Prompt Audio Codec Codes:</strong> Extracted by selecting a short
-          speech prompt and compressing it through EnCodec Model [R3].
+          speech prompt and compressing it through the EnCodec Model [R1].
         </li>
       </ul>
       <p class="text-gray-700 mb-4">
@@ -176,8 +176,8 @@
         The receiver reverses the transmitter steps, demodulating and decoding the data
         streams. Phoneme IDs and audio codec codes are recovered and mapped to their
         original order based on stored index information. Finally, the VALL-E
-        model [R11] predicts the remaining codec codes, and the EnCodec decoder
-        reconstructs the full speech waveform [R3]. This integrated pipeline
+        model [R2] predicts the remaining codec codes, and the EnCodec decoder
+        reconstructs the full speech waveform [R1]. This integrated pipeline
         enables a zero-shot capability for unseen speakers, achieving high-quality
         performance in low-power and noisy scenarios.
       </p>
@@ -215,12 +215,12 @@
       <ol class="list-decimal list-inside text-gray-700 ml-6">
         <!-- Keep only the references cited in the text -->
         <li>
-          <strong>[R3]</strong> D{\'e}fossez, A., Copet, J., Synnaeve, G., &amp; Adi, Y. (2022).
+          <strong>[R1]</strong> D{\'e}fossez, A., Copet, J., Synnaeve, G., &amp; Adi, Y. (2022).
           "High Fidelity Neural Audio Compression." 
           <em>arXiv preprint arXiv:2210.13438</em>.
         </li>
         <li>
-          <strong>[R11]</strong> Wang, C. et al. (2023). 
+          <strong>[R2]</strong> Wang, C. et al. (2023). 
           "Neural Codec Language Models Are Zero-Shot Text to Speech Synthesizers," 
           <em>arXiv preprint arXiv:2301.02111</em>.
         </li>
