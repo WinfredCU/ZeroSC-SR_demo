@@ -376,7 +376,8 @@
         A deletion-based experiment on the 8-stage audio codec codes reveals certain stages carry more critical information. Removing Stage 1, for example, severely degrades recognition accuracy and speaker similarity, while dropping Stage 5 affects finer details like timbre.
       </p>
       <p class="text-gray-700 mb-4">
-        Below are final reconstructed samples when specific stages are removed. Notice how losing early stages impacts semantic clarity <em>and</em> acoustic identity, while dropping later stages primarily influences fine-grained quality.
+        Below are the final reconstructed samples when specific stages are removed. 
+        Notice the importance of stages decreases progressively from the first to the last, with Stage 1 having the greatest impact on system performance.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div class="audio-sample">
