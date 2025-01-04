@@ -124,24 +124,21 @@
       <ul class="list-disc list-inside text-gray-700 mb-4 ml-6">
         <li>
           <strong>Phoneme IDs:</strong> Capturing essential linguistic elements
-          via ASR-based phonemization [R5, R6].
+          via ASR-based phonemization.
         </li>
         <li>
           <strong>Prompt Audio Codec Codes:</strong> Extracted by selecting a short
-          speech prompt and compressing it through EnCodec [R3]. This approach
-          preserves speaker identity cues while facilitating digital transmission.
+          speech prompt and compressing it through EnCodec Model [R3]. 
         </li>
       </ul>
       <p class="text-gray-700 mb-4">
-        These two data streams are then converted into binary sequences and protected
-        with error-control coding (e.g., LDPC) [R7], followed by modulation (e.g., 4-QAM)
-        for frequency-selective channels [R8].
+        These data streams are sorted by importance levels, then converted into binary sequences and protected
+        with error-control coding (e.g., LDPC), followed by modulation (e.g., 4-QAM).
       </p>
       <figure class="mb-4">
         <img src="Fig/channel_encoder.svg" alt="Channel Encoder Diagram" class="w-full rounded shadow"/>
         <figcaption class="text-center text-sm text-gray-600 mt-2">
-          Figure 1: Channel Encoder Diagram illustrating segmentation, binary conversion,
-          and sorting by importance [R4, R9].
+          Figure 1: Channel Encoder Diagram.
         </figcaption>
       </figure>
 
