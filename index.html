@@ -89,53 +89,126 @@
       <figcaption class="text-center text-sm text-gray-600 mt-2">Figure 1: Overview of the ZeroSC-SR system structure.</figcaption>
     </figure>
 
-    <!-- Proposed System -->
-    <section id="proposed-system" class="mb-12">
-      <h2 class="section-title">Proposed System</h2>
-      <p class="text-gray-700 mb-4">
-        The ZeroSC-SR system introduces a cutting-edge approach to semantic speech communication, addressing challenges in transmitting speech over frequency-selective fading channels. By combining phoneme-based semantic transmission with advanced audio codec compression, the system achieves efficient data transmission and robust performance under adverse conditions.
-      </p>
+<!-- Proposed System (Revised) -->
+<section id="proposed-system" class="mb-12">
+  <h2 class="section-title">Proposed System</h2>
+  <p class="text-gray-700 mb-4">
+    The proposed ZeroSC-SR framework combines semantic (phoneme-level) and acoustic (prompt audio codec) features 
+    to enable efficient speech transmission under frequency-selective fading channels 
+    <span class="text-gray-500 text-sm">[1, 2]</span>. 
+    By integrating phoneme extraction, audio codec compression, and a novel 
+    <em>sort-match strategy</em>, ZeroSC-SR mitigates channel impairments while preserving 
+    key linguistic and speaker identity information. 
+    <strong>Figure 1</strong> shows an overview of the ZeroSC-SR system 
+    <span class="text-gray-500 text-sm">[Fig.&nbsp;1 from paper, \cite{defossez2022high,wang2023neural}]</span>.
+  </p>
 
-      <!-- System Model Structure -->
-      <h3 class="subsection-title">System Model Structure</h3>
-      <ul class="list-disc list-inside text-gray-700 mb-4">
-        <li>
-          At the <strong>transmitter</strong>, input speech is converted into phoneme IDs and compressed acoustic features using audio codec codes from the EnCodec model.
-        </li>
-        <li>
-          During <strong>channel transmission</strong>, a novel sort-match strategy prioritizes data by importance, optimizing resource allocation under frequency-selective fading conditions.
-        </li>
-        <li>
-          At the <strong>receiver</strong>, phoneme sequences and codec codes are recovered, and the VALL-E model predicts extended codec codes to reconstruct speech using the EnCodec model.
-        </li>
-      </ul>
+  <!-- 1) Transmitter -->
+  <h3 id="transmitter" class="subsection-title">1) Transmitter</h3>
+  <p class="text-gray-700 mb-4">
+    At the transmitter, the input speech is first split into semantic and acoustic components 
+    <span class="text-gray-500 text-sm">[3, 4]</span>. 
+    <strong>Phoneme IDs</strong> succinctly capture linguistic content, while 
+    <strong>prompt audio codec codes</strong> retain speaker-specific cues 
+    via the EnCodec model <span class="text-gray-500 text-sm">[5]</span>. 
+    This design adheres to digital transmission principles 
+    <span class="text-gray-500 text-sm">[6]</span>, 
+    facilitating integration with typical communication blocks such as modulation and 
+    error-control coding (e.g., LDPC).
+  </p>
+  <ul class="list-disc list-inside text-gray-700 mb-4 ml-6">
+    <li>
+      <strong>Phoneme Extraction:</strong> Converts raw speech into phoneme IDs 
+      using an ASR-based pipeline 
+      <span class="text-gray-500 text-sm">[\cite{radford2023robust}, \cite{prabhavalkar2024survey}]</span>.
+    </li>
+    <li>
+      <strong>Prompt Selection and Compression:</strong> Selects a short prompt from the 
+      input speech and encodes it with EnCodec 
+      <span class="text-gray-500 text-sm">[\cite{defossez2022high}]</span>, 
+      yielding discrete audio codec codes essential for capturing speaker identity.
+    </li>
+  </ul>
 
-    <figure class="mb-4">
-      <img src="Fig/channel_encoder.svg" alt="Channel Encoder Diagram" class="w-full rounded shadow">
-      <figcaption class="text-center text-sm text-gray-600 mt-2">Figure 2: Channel Enocder Diagram.</figcaption>
-    </figure>
+  <figure class="mb-4">
+    <img src="Fig/channel_encoder.svg" alt="Channel Encoder Diagram" class="w-full rounded shadow">
+    <figcaption class="text-center text-sm text-gray-600 mt-2">
+      <strong>Figure 2:</strong> Channel Encoder Diagram illustrating the segmentation, sorting by importance, 
+      and binary conversion of phoneme and codec streams 
+      <span class="text-gray-500 text-sm">[\cite{weng2021JSAC}, \cite{9953316}]</span>.
+    </figcaption>
+  </figure>
 
-      <!-- Contributions -->
-      <h3 class="subsection-title">Main Contributions</h3>
-      <ul class="list-disc list-inside text-gray-700 mb-4">
-        <li>
-          <strong>Innovative Zero-Shot Semantic Communication System:</strong> Enables efficient digital transmission of both phonemes and acoustic features over frequency-selective fading channels.
-        </li>
-        <li>
-          <strong>Trade-off Analysis Between Prompt Length and Performance:</strong> Evaluates the influence of prompt length on recognition accuracy and system performance, identifying a practical trade-off between energy efficiency and performance.
-        </li>
-        <li>
-          <strong>Impact Analysis of Intermediate Transmission Data:</strong> Investigates the role of phoneme information and audio codec codes at various quantization levels, guiding the sort-match strategy design.
-        </li>
-        <li>
-          <strong>Novel Sort-Match Strategy:</strong> Allocates subcarriers by ranking data importance to enhance performance in frequency-selective fading channels, outperforming prior frequency-flat fading assumptions.
-        </li>
-        <li>
-          <strong>Efficient Integration with Digital Communication:</strong> To integrate with digital communication systems and reduce transmitted acoustic data, we use audio codec codes~\cite{defossez2022high} instead of traditional mel spectrograms. Incorporating the VALL-E prediction model~\cite{wang2023neural} provides zero-shot capability, enabling speech synthesis for unseen speakers without relying on restricted databases. 
-        </li>
-      </ul>
-      
-    </section>
+  <!-- 2) Sort-Match Strategy for Frequency-Selective Channels -->
+  <h3 id="sort-match-strategy" class="subsection-title">
+    2) Sort-Match Strategy for Frequency-Selective Channels
+  </h3>
+  <p class="text-gray-700 mb-4">
+    After obtaining modulated data streams, ZeroSC-SR applies a 
+    <em>sort-match strategy</em> to address frequency-selective fading 
+    <span class="text-gray-500 text-sm">[7, 8]</span>. This method:
+  </p>
+  <ol class="list-decimal list-inside text-gray-700 mb-4 ml-6">
+    <li>
+      <strong>Sorts data streams</strong> by importance, prioritizing phoneme IDs and 
+      earlier codec stages (shown to be more critical) 
+      <span class="text-gray-500 text-sm">[\cite{wang2023neural}, \cite{defossez2022high}]</span>.
+    </li>
+    <li>
+      <strong>Sorts subcarriers</strong> by channel gain magnitude, identifying 
+      the most reliable subcarriers 
+      <span class="text-gray-500 text-sm">[9]</span>.
+    </li>
+    <li>
+      <strong>Matches critical data</strong> to stronger subcarriers, ensuring 
+      higher protection against noise and fading 
+      <span class="text-gray-500 text-sm">[\cite{weng2023deep}, \cite{weng2021semantic}]</span>.
+    </li>
+  </ol>
+  <p class="text-gray-700 mb-4">
+    This frequency-dependent allocation significantly improves semantic fidelity 
+    and speaker similarity under harsh channel conditions, differentiating 
+    ZeroSC-SR from prior designs that assume frequency-flat fading 
+    <span class="text-gray-500 text-sm">[\cite{9953316}, \cite{weng2021JSAC}, \cite{weng2023deep}]</span>.
+  </p>
+
+  <!-- 3) Receiver -->
+  <h3 id="receiver" class="subsection-title">3) Receiver</h3>
+  <p class="text-gray-700 mb-4">
+    On the receiver side, the system reverses the encoding steps and reconstructs 
+    the full speech signal 
+    <span class="text-gray-500 text-sm">[10]</span>:
+  </p>
+  <ul class="list-disc list-inside text-gray-700 mb-4 ml-6">
+    <li>
+      <strong>Channel Decoder:</strong> Demodulates, decodes (LDPC), and reassembles 
+      the phoneme IDs and prompt audio codec codes according to importance-based 
+      index information 
+      <span class="text-gray-500 text-sm">[\cite{shi2021semantic}, \cite{qin2021semantic}]</span>.
+    </li>
+    <li>
+      <strong>Speech Synthesis with VALL-E:</strong> Uses a zero-shot TTS predictor 
+      \cite{wang2023neural} to expand the prompt codec codes into a full set of 
+      audio codec representations, guided by the transmitted phoneme IDs.
+    </li>
+    <li>
+      <strong>Final Reconstruction:</strong> Employs EnCodec’s decoder 
+      \cite{defossez2022high} on the expanded codec sequence to produce the 
+      reconstructed speech waveform, preserving both semantic content and speaker 
+      characteristics.
+    </li>
+  </ul>
+  <p class="text-gray-700">
+    Extensive experiments validate ZeroSC-SR’s advantages over conventional 
+    communication systems. The system achieves lower Character Error Rates (CER), 
+    higher speaker similarity scores, and maintains a high compression ratio even 
+    under noisy or low-power conditions 
+    <span class="text-gray-500 text-sm">
+      [\cite{9953316}, \cite{weng2021JSAC}, \cite{weng2023deep}, \cite{wang2023neural}]
+    </span>.
+  </p>
+
+</section>
 
     <!-- Experiment and Numerical Results -->
     <section id="experiment-results" class="mb-12">
