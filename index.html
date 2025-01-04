@@ -147,40 +147,34 @@
         2) Sort-Match Strategy
       </h3>
       <p class="text-gray-700 mb-4">
-        To combat frequency-selective fading, ZeroSC-SR ranks data streams by importance
-        (phonemes, then codec stages) and matches them to subcarriers sorted by channel
-        gain [R1, R4]. This ensures critical features (e.g., phoneme data) are placed on
-        stronger subcarriers, reducing error rates even under adverse conditions.
+        To combat frequency-selective fading, ZeroSC-SR ranks data streams by importance levels and matches them to subcarriers sorted by channel
+        gain. This ensures critical features are placed on
+        stronger subcarriers, maintaining good system performance even under adverse conditions.
       </p>
       <ol class="list-decimal list-inside text-gray-700 mb-4 ml-6">
         <li>
           <strong>Sort Data Streams:</strong> Phoneme and codec codes are ordered by
-          importance, with phoneme IDs given the highest priority [R1].
+          importance, with phoneme IDs given the highest priority.
         </li>
         <li>
           <strong>Sort Subcarriers:</strong> Subcarriers are arranged in descending order
           of channel gain magnitude.
         </li>
         <li>
-          <strong>Allocation:</strong> Assign highest-priority data to the best subcarriers,
-          optimizing semantic and speaker fidelity.
+          <strong>Allocation:</strong> Assign higher-priority data to the better subcarriers. 
         </li>
       </ol>
-      <p class="text-gray-700 mb-4">
-        By leveraging this frequency-dependent resource allocation, ZeroSC-SR outperforms
-        systems assuming frequency-flat fading [R9, R10].
-      </p>
 
       <!-- (3) Receiver -->
       <h3 id="receiver" class="subsection-title">3) Receiver</h3>
       <p class="text-gray-700 mb-4">
         The receiver reverses the transmitter steps, demodulating and decoding the data
         streams. Phoneme IDs and audio codec codes are recovered and mapped to their
-        original order based on stored index information [R2]. Finally, the VALL-E
+        original order based on stored index information. Finally, the VALL-E
         model [R11] predicts the remaining codec codes, and the EnCodec decoder
         reconstructs the full speech waveform [R3]. This integrated pipeline
-        enables a zero-shot capability for speaker adaptation, achieving high-quality
-        performance in low-power and noisy scenarios [R12].
+        enables a zero-shot capability for unseen speakers, achieving high-quality
+        performance in low-power and noisy scenarios.
       </p>
     </section>
 
