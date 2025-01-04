@@ -297,12 +297,12 @@
       </ul>
 
       <!-- Audio Samples for Phoneme Transmission -->
-      <p class="font-semibold mt-4 mb-2 text-gray-800">phonemes are transmitted through a noisy channel while acoustic features remain noiseless</p>
+      <p class="font-semibold mt-4 mb-2 text-gray-800">Phonemes are transmitted through a noisy channel while acoustic features remain noiseless</p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 0 dB</p>
           <p class="text-sm text-gray-600 mb-2">
-            Extremely noisy, high chance of phoneme errors and semantic loss.
+            Very Bad.
           </p>
           <audio controls class="w-full">
             <source src="audio/Phoneme_Acoustic_SNR/0dB_phoneme/121_127105_000008_000000.wav" type="audio/wav" />
@@ -312,7 +312,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 5 dB</p>
           <p class="text-sm text-gray-600 mb-2">
-            Moderate noise, phoneme errors still possible but partially mitigated.
+            Poor.
           </p>
           <audio controls class="w-full">
             <source src="audio/Phoneme_Acoustic_SNR/5dB_phoneme/121_127105_000008_000000.wav" type="audio/wav" />
@@ -322,7 +322,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 10 dB</p>
           <p class="text-sm text-gray-600 mb-2">
-            Less noise, higher semantic accuracy in phoneme decoding.
+            Good.
           </p>
           <audio controls class="w-full">
             <source src="audio/Phoneme_Acoustic_SNR/10dB_phoneme/121_127105_000008_000000.wav" type="audio/wav" />
@@ -337,7 +337,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 0 dB</p>
           <p class="text-sm text-gray-600 mb-2">
-            Extremely noisy channel for acoustic codes, speaker identity severely distorted.
+            Poor. 
           </p>
           <audio controls class="w-full">
             <source src="audio/Phoneme_Acoustic_SNR/0dB_acoustic/121_127105_000008_000000.wav" type="audio/wav" />
@@ -347,7 +347,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 5 dB</p>
           <p class="text-sm text-gray-600 mb-2">
-            Moderate noise, some speaker nuances remain but noticeable artifacts.
+            Acceptable. 
           </p>
           <audio controls class="w-full">
             <source src="audio/Phoneme_Acoustic_SNR/5dB_acoustic/121_127105_000008_000000.wav" type="audio/wav" />
@@ -357,7 +357,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 10 dB</p>
           <p class="text-sm text-gray-600 mb-2">
-            Cleaner channel, closer to original voice quality and prosody.
+            Good. 
           </p>
           <audio controls class="w-full">
             <source src="audio/Phoneme_Acoustic_SNR/10dB_acoustic/121_127105_000008_000000.wav" type="audio/wav" />
