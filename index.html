@@ -416,19 +416,19 @@
       <!-- 4) Sort-Match Strategy Analysis -->
       <h3 id="sort-match" class="subsection-title">4) Sort-Match Strategy Analysis</h3>
       <p class="text-gray-700 mb-4">
-        To address frequency-selective fading, we propose sorting data streams by importance (e.g., phonemes and earlier codec stages first) and matching them to sub-carriers with higher gains. Compared with random allocation, our sort-match strategy consistently yields lower CER/WER and maintains higher speaker similarity, especially under low SNR conditions.
+        To address frequency-selective fading, we propose sorting data streams by importance (e.g., phonemes and earlier codec stages) and matching them to sub-carriers with higher gains. Compared with random allocation, our sort-match strategy consistently yields lower CER/WER and maintains higher speaker similarity, especially under low SNR conditions.
       </p>
 
       <!-- Audio Samples for Sort-Match Strategy Analysis -->
       <p class="text-gray-700 mb-4">
-        Below are system outputs at different SNRs for Sort-Match vs. Random-Match. Pay attention to both semantic clarity and speaker consistency.
+        Below are system outputs at different SNRs for Sort-Match vs. Random-Match. 
       </p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- SNR = 5 dB -->
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 5 dB: Sort-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Prioritized data on higher-gain subcarriers yields better intelligibility under noise.
+             Satisfactory. 
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/sort/SNR5/121_127105_000016_000006.wav" type="audio/wav" />
@@ -438,7 +438,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 5 dB: Random-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Data is allocated arbitrarily; expect more errors and degraded speaker fidelity.
+            Very Bad.
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/random/SNR5/121_127105_000016_000006.wav" type="audio/wav" />
@@ -450,7 +450,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 10 dB: Sort-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Improved channel conditions preserve both semantic and acoustic cues.
+             Good. 
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/sort/SNR10/121_127105_000016_000006.wav" type="audio/wav" />
@@ -460,7 +460,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 10 dB: Random-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Random allocation still introduces artifacts; less consistent speech quality.
+            Poor. 
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/random/SNR10/121_127105_000016_000006.wav" type="audio/wav" />
@@ -472,7 +472,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 15 dB: Sort-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            High SNR plus sorted data yields near-original clarity.
+            Very Good. 
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/sort/SNR15/121_127105_000016_000006.wav" type="audio/wav" />
@@ -482,7 +482,7 @@
         <div class="audio-sample">
           <p class="font-medium mb-2">SNR = 15 dB: Random-Match Strategy</p>
           <p class="text-sm text-gray-600 mb-2">
-            Even with good channel quality, random approach lags in fidelity.
+            Satisfactory. 
           </p>
           <audio controls class="w-full">
             <source src="audio/Sort_Match/random/SNR15/121_127105_000016_000006.wav" type="audio/wav" />
