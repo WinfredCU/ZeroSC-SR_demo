@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ZeroSC-SR Paper Demo</title>
+  <title>ZeroSC-SR: Importance-Aware Zero-Shot Semantic Speech Communication over Fading Channels</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -28,24 +28,10 @@
     <!-- Header -->
     <header class="text-center mb-12">
       <h1 class="text-4xl font-bold mb-4">
-        ZeroSC-SR: Leveraging Data Importance for Efficient Semantic Speech Communication
+        ZeroSC-SR: Importance-Aware Zero-Shot Semantic Speech Communication over Fading Channels
       </h1>
-      <div class="flex flex-wrap justify-center gap-4 mb-2">
-        <div class="text-center">
-          <p class="font-medium">Zewei Wang</p>
-        </div>
-        <div class="text-center">
-          <p class="font-medium">Guanchong Niu</p>
-        </div>
-        <div class="text-center">
-          <p class="font-medium">Yao Tang</p>
-        </div>
-        <div class="text-center">
-          <p class="font-medium">Tat Ming Lok</p>
-        </div>
-        <div class="text-center">
-          <p class="font-medium">Man-On Pun</p>
-        </div>
+      <div class="text-center">
+        <p class="font-medium">Zewei Wang, Guanchong Niu, Yao Tang, Tat Ming Lok, Man-On Pun</p>
       </div>
       <p class="text-sm text-gray-600">
         Contact: <span class="font-medium">Zewei Wang</span> (<em>zwwong at link.cuhk.edu.hk</em>)
@@ -66,8 +52,8 @@
               </a>
             </li>
             <li>
-              <a href="#sort-match-strategy" class="text-blue-600 hover:underline">
-                Sort-Match Strategy for Frequency-Selective Channels
+              <a href="#iiaps-strategy" class="text-blue-600 hover:underline">
+                Iterative Importance-Aware Allocation and Power Scheduling Strategy
               </a>
             </li>
             <li>
@@ -84,8 +70,7 @@
           <ul class="list-decimal list-inside ml-6">
             <li><a href="#prompt-length" class="text-blue-600 hover:underline">Prompt Length</a></li>
             <li><a href="#phoneme-acoustic" class="text-blue-600 hover:underline">Phonemes vs. Acoustic Features</a></li>
-            <li><a href="#importance-analysis" class="text-blue-600 hover:underline">Importance Analysis of Acoustic Features</a></li>
-            <li><a href="#sort-match" class="text-blue-600 hover:underline">Sort-Match Strategy Analysis</a></li>
+            <li><a href="#iiaps-analysis" class="text-blue-600 hover:underline">IIAPS Strategy Analysis</a></li>
             <li><a href="#comparison-models" class="text-blue-600 hover:underline">Comparison With Other Models</a></li>
           </ul>
         </li>
@@ -105,7 +90,8 @@
       We quantitatively evaluate the semantic importance of intermediate transmission data, encompassing phoneme sequences and acoustic features, through a task-oriented Mutual-Information-based approach.
       These insights directly guide the development of our Iterative Importance-Aware Allocation and Power Scheduling strategy, which enhances transmission quality in frequency-selective fading channels by allocating channel resources based on semantic importance.
       Experimental results show that ZeroSC-SR surpasses conventional speech communication systems, demonstrating its effectiveness in real-world applications that demand reliable and efficient speech communication over challenging channels.
-      </section>
+      </p>
+    </section>
 
     <figure class="mb-4">
       <img src="Fig/overview.svg" alt="Proposed System Diagram" class="w-full rounded shadow" />
@@ -134,11 +120,11 @@
         </li>
         <li>
           <strong>Prompt Audio Codec Codes:</strong> Extracted by selecting a short
-          speech prompt and compressing it through the EnCodec Model [R1].
+          speech prompt and compressing it through the Audio Codec Model [R1].
         </li>
       </ul>
       <p class="text-gray-700 mb-4">
-        These data streams are sorted by importance levels, then converted into binary sequences and protected
+        These data streams are evaluated by the mutual-information-based task-oriented approach, then converted into binary sequences and protected
         with error-control coding (e.g., LDPC), followed by modulation (e.g., 4-QAM).
       </p>
       <figure class="mb-4">
@@ -148,27 +134,33 @@
         </figcaption>
       </figure>
 
-      <!-- (2) Sort-Match Strategy -->
-      <h3 id="sort-match-strategy" class="subsection-title">
-        2) Sort-Match Strategy for Frequency-Selective Channels
+      <!-- (2) IIAPS Strategy -->
+      <h3 id="iiaps-strategy" class="subsection-title">
+        2) Iterative Importance-Aware Allocation and Power Scheduling Strategy
       </h3>
       <p class="text-gray-700 mb-4">
-        To combat frequency-selective fading, ZeroSC-SR ranks data streams by importance levels and matches them to subcarriers sorted by channel
-        gain. This ensures critical features are placed on
-        stronger subcarriers, maintaining good system performance even under adverse conditions.
+        To combat frequency-selective fading, ZeroSC-SR employs an Iterative Importance-Aware Allocation and Power Scheduling (IIAPS) strategy, optimizing the assignment of data streams to subcarriers and power distribution to maximize transmission reliability while balancing intelligibility and speaker fidelity within a fixed power budget.
       </p>
-      <ol class="list-decimal list-inside text-gray-700 mb-4 ml-6">
+      <p class="text-gray-700 mb-4">
+        <strong>Problem Formulation:</strong> The goal is to maximize the reliability of transmitting critical data streams over multiple subcarriers, weighted by their importance to the tasks of speech intelligibility and speaker fidelity. Importance weights are derived from a mutual-information-based approach, with a user-defined parameter balancing these objectives. The system ensures each subcarrier carries at most one stream, uses non-negative power, and adheres to a total power limit, accounting for channel gains and noise levels.
+      </p>
+      <p class="text-gray-700 mb-4">
+        <strong>IIAPS Solution:</strong> The complex optimization problem is addressed iteratively:
+      </p>
+      <ol class="list-roman list-inside text-gray-700 mb-4 ml-6">
         <li>
-          <strong>Sort Data Streams:</strong> The data streams are sorted in descending order of importance level. 
+          <strong>Initial Assignment:</strong> Data streams are prioritized by their importance, and subcarriers are ranked by their channel quality. High-importance streams are paired with high-quality subcarriers to create an initial assignment.
         </li>
         <li>
-          <strong>Sort Subcarriers:</strong> Subcarriers are arranged in descending order
-          of channel gain magnitude.
+          <strong>Power Allocation:</strong> Power is distributed across assigned subcarriers using a water-filling approach, allocating more power to streams based on their importance and channel conditions, while respecting the total power constraint.
         </li>
         <li>
-          <strong>Allocation:</strong> Assign higher-priority data to the stronger subcarriers. 
+          <strong>Refinement:</strong> The system iteratively evaluates swapping stream-subcarrier assignments, accepting changes that improve overall reliability, until no further improvements are possible.
         </li>
       </ol>
+      <p class="text-gray-700 mb-4">
+        This iterative process ensures efficient and reliable transmission by aligning stream importance with channel quality and power allocation, achieving a local optimum with low computational complexity [R7].
+      </p>
 
       <!-- (3) Receiver -->
       <h3 id="receiver" class="subsection-title">3) Receiver</h3>
@@ -176,19 +168,19 @@
         The receiver reverses the transmitter steps, demodulating and decoding the data
         streams. Phoneme IDs and audio codec codes are recovered and mapped to their
         original order based on stored index information. Finally, the VALL-E
-        model [R2] predicts the remaining codec codes, and the EnCodec decoder
+        model [R2] predicts the remaining codec codes, and the Audio Codec decoder
         reconstructs the full speech waveform [R1]. This integrated pipeline
         enables a zero-shot capability for unseen speakers, achieving high-quality
         performance in low-power and noisy scenarios.
       </p>
     </section>
 
-  
     <!-- Experiment and Numerical Results -->
     <section id="experiment-results" class="mb-12">
       <h2 class="section-title">Experiment and Numerical Results</h2>
       <p class="text-gray-700 mb-6">
-        The performance of the proposed system is evaluated under varying channel conditions, assuming perfect channel state information. Experiments are conducted using the Libri-light dataset on an NVIDIA RTX A4000. Metrics such as Character Error Rate (CER), Word Error Rate (WER), and speaker similarity provide insights into semantic understanding and speaker fidelity. The table below lists key experimental parameters.
+        The performance of the proposed system is evaluated under varying channel conditions. Experiments are conducted using the Libri-light dataset [R3] on an NVIDIA RTX A4000. The evaluation metrics, including the CER, WER [R4], and speaker similarity [R5], provide insights into the system’s semantic understanding and speaker fidelity.
+        We utilize three pre-trained models: Whisper [R6] for automatic speech recognition, EnCodec [R1] for audio codec model, and VALL-E [R2] for zero-shot speech synthesis.
       </p>
 
       <!-- Experiment Parameters Table -->
@@ -229,13 +221,6 @@
               <td class="py-2 px-4">[-5, 15] dB</td>
               <td class="py-2 px-4">
                 <a href="#phoneme-acoustic" class="text-blue-600 hover:underline">Sec. IV.B</a>
-              </td>
-            </tr>
-            <tr class="border-b">
-              <td class="py-2 px-4">Stages in Audio Codec Codes</td>
-              <td class="py-2 px-4">8</td>
-              <td class="py-2 px-4">
-                <a href="#importance-analysis" class="text-blue-600 hover:underline">Sec. IV.C</a>
               </td>
             </tr>
           </tbody>
@@ -370,129 +355,150 @@
         Phonemes exhibit higher noise sensitivity (critical SNR: 5–10 dB) than acoustic features (critical SNR: 0–5 dB). 
       </p>
 
-      <!-- 3) Importance Analysis of Acoustic Features -->
-      <h3 id="importance-analysis" class="subsection-title">3) Importance Analysis of Acoustic Features</h3>
+      <!-- 3) IIAPS Strategy Analysis -->
+      <h3 id="iiaps-analysis" class="subsection-title">3) IIAPS Strategy Analysis</h3>
       <p class="text-gray-700 mb-4">
-        A deletion-based experiment on the 8-stage audio codec codes reveals certain stages carry more critical information.
-        For example, deleting Stage 1 severely degrades WER, CER, and speaker similarity, demonstrating its critical role in preserving both semantic information and speaker identity.
+        The IIAPS strategy is evaluated by transmitting nine semantic streams (one phoneme stream and eight audio codec stages from a 2-second prompt) over 20 OFDM subcarriers, with a fixed power budget and SNR ranging from -5 dB to 15 dB. The setup assumes perfect channel state information and equal weighting for intelligibility and speaker fidelity.
       </p>
       <p class="text-gray-700 mb-4">
-        Below are the final reconstructed samples when specific stages are removed. 
-        Notice the importance of stages decreases progressively from the first to the last, with Stage 1 having the greatest impact on system performance.
+        <strong>Comparison Strategies:</strong>
       </p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <ul class="list-disc list-inside text-gray-700 mb-4 ml-4">
+        <li><strong>Random-Uniform:</strong> Randomly assigns streams to subcarriers with uniform power distribution.</li>
+        <li><strong>Random-WF:</strong> Uses random assignments but allocates power based on channel quality.</li>
+        <li><strong>Greedy-WF:</strong> Pairs high-importance streams with high-quality subcarriers, then applies power allocation based on channel quality.</li>
+      </ul>
+      <figure class="mb-4">
+        <img src="Figures/IIAPS_WER.eps" alt="WER vs. SNR" class="w-full rounded shadow"/>
+        <figcaption class="text-center text-sm text-gray-600 mt-2">
+          Figure 3: WER vs. SNR for IIAPS and baseline strategies.
+        </figcaption>
+      </figure>
+      <figure class="mb-4">
+        <img src="Figures/IIAPS_Similarity.eps" alt="Speaker Similarity vs. SNR" class="w-full rounded shadow"/>
+        <figcaption class="text-center text-sm text-gray-600 mt-2">
+          Figure 4: Speaker Similarity vs. SNR for IIAPS and baseline strategies.
+        </figcaption>
+      </figure>
+      <!-- Audio Samples for IIAPS Strategy Analysis -->
+      <p class="text-gray-700 mb-4">
+        Below are system outputs at 5 dB, 10 dB, and 15 dB for IIAPS, Random-Uniform, Random-WF, and Greedy-WF.
+      </p>
+      <!-- IIAPS Strategy -->
+      <p class="font-semibold mt-4 mb-2 text-gray-800">IIAPS Strategy</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="audio-sample">
-          <p class="font-medium mb-2">Deleting Stage 1</p>
-          <p class="text-sm text-gray-600 mb-2">
-            The worst performance --> The most important stage
-          </p>
+          <p class="font-medium mb-2">SNR = 5 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Satisfactory.</p>
           <audio controls class="w-full">
-            <source src="audio/Stage_Delete/stage1/121_127105_000016_000006.wav" type="audio/wav" />
+            <source src="audio/IIAPS/sort/SNR5/121_127105_000016_000006.wav" type="audio/wav" />
             Your browser does not support the audio element.
           </audio>
         </div>
         <div class="audio-sample">
-          <p class="font-medium mb-2">Deleting Stage 2</p>
-          <p class="text-sm text-gray-600 mb-2">
-            Bad performance --> Important stage data
-          </p>
+          <p class="font-medium mb-2">SNR = 10 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Good.</p>
           <audio controls class="w-full">
-            <source src="audio/Stage_Delete/stage2/121_127105_000016_000006.wav" type="audio/wav" />
+            <source src="audio/IIAPS/sort/SNR10/121_127105_000016_000006.wav" type="audio/wav" />
             Your browser does not support the audio element.
           </audio>
         </div>
         <div class="audio-sample">
-          <p class="font-medium mb-2">Deleting Stage 5</p>
-          <p class="text-sm text-gray-600 mb-2">
-            Good performance --> Unimportant Stage data
-          </p>
+          <p class="font-medium mb-2">SNR = 15 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Very Good.</p>
           <audio controls class="w-full">
-            <source src="audio/Stage_Delete/stage5/121_127105_000016_000006.wav" type="audio/wav" />
+            <source src="audio/IIAPS/sort/SNR15/121_127105_000016_000006.wav" type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+      <!-- Random-Uniform Strategy -->
+      <p class="font-semibold mt-4 mb-2 text-gray-800">Random-Uniform Strategy</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 5 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Very Bad.</p>
+          <audio controls class="w-full">
+            <source src="audio/IIAPS/random-uniform/SNR5/121_127105_000016_000006.wav" type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 10 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Poor.</p>
+          <audio controls class="w-full">
+            <source src="audio/IIAPS/random-uniform/SNR10/121_127105_000016_000006.wav" type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 15 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Satisfactory.</p>
+          <audio controls class="w-full">
+            <source src="audio/IIAPS/random-uniform/SNR15/121_127105_000016_000006.wav" type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+      <!-- Random-WF Strategy -->
+      <p class="font-semibold mt-4 mb-2 text-gray-800">Random-WF Strategy</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 5 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Very Bad.</p>
+          <audio controls class="w-full">
+            <source src="audio/IIAPS/random-wf/SNR5/121_127105_000016_000006.wav" type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 10 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Poor.</p>
+          <audio controls class="w-full">
+            <source src="audio/IIAPS/random-wf/SNR10/121_127105_000016_000006.wav" type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 15 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Satisfactory.</p>
+          <audio controls class="w-full">
+            <source src="audio/IIAPS/random-wf/SNR15/121_127105_000016_000006.wav" type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+      <!-- Greedy-WF Strategy -->
+      <p class="font-semibold mt-4 mb-2 text-gray-800">Greedy-WF Strategy</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 5 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Poor.</p>
+          <audio controls class="w-full">
+            <source src="audio/IIAPS/greedy-wf/SNR5/121_127105_000016_000006.wav" type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 10 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Satisfactory.</p>
+          <audio controls class="w-full">
+            <source src="audio/IIAPS/greedy-wf/SNR10/121_127105_000016_000006.wav" type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-sample">
+          <p class="font-medium mb-2">SNR = 15 dB</p>
+          <p class="text-sm text-gray-600 mb-2">Good.</p>
+          <audio controls class="w-full">
+            <source src="audio/IIAPS/greedy-wf/SNR15/121_127105_000016_000006.wav" type="audio/wav" />
             Your browser does not support the audio element.
           </audio>
         </div>
       </div>
 
-      <!-- 4) Sort-Match Strategy Analysis -->
-      <h3 id="sort-match" class="subsection-title">4) Sort-Match Strategy Analysis</h3>
-      <p class="text-gray-700 mb-4">
-        To address frequency-selective fading, we propose sorting data streams by importance (e.g., phonemes and earlier codec stages) and matching them to sub-carriers with higher gains. Compared with random allocation, our sort-match strategy consistently yields lower CER/WER and maintains higher speaker similarity, especially under low SNR conditions.
-      </p>
-
-      <!-- Audio Samples for Sort-Match Strategy Analysis -->
-      <p class="text-gray-700 mb-4">
-        Below are system outputs at different SNRs for Sort-Match vs. Random-Match. 
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- SNR = 5 dB -->
-        <div class="audio-sample">
-          <p class="font-medium mb-2">SNR = 5 dB: Sort-Match Strategy</p>
-          <p class="text-sm text-gray-600 mb-2">
-             Satisfactory. 
-          </p>
-          <audio controls class="w-full">
-            <source src="audio/Sort_Match/sort/SNR5/121_127105_000016_000006.wav" type="audio/wav" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-        <div class="audio-sample">
-          <p class="font-medium mb-2">SNR = 5 dB: Random-Match Strategy</p>
-          <p class="text-sm text-gray-600 mb-2">
-            Very Bad.
-          </p>
-          <audio controls class="w-full">
-            <source src="audio/Sort_Match/random/SNR5/121_127105_000016_000006.wav" type="audio/wav" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <!-- SNR = 10 dB -->
-        <div class="audio-sample">
-          <p class="font-medium mb-2">SNR = 10 dB: Sort-Match Strategy</p>
-          <p class="text-sm text-gray-600 mb-2">
-             Good. 
-          </p>
-          <audio controls class="w-full">
-            <source src="audio/Sort_Match/sort/SNR10/121_127105_000016_000006.wav" type="audio/wav" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-        <div class="audio-sample">
-          <p class="font-medium mb-2">SNR = 10 dB: Random-Match Strategy</p>
-          <p class="text-sm text-gray-600 mb-2">
-            Poor. 
-          </p>
-          <audio controls class="w-full">
-            <source src="audio/Sort_Match/random/SNR10/121_127105_000016_000006.wav" type="audio/wav" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <!-- SNR = 15 dB -->
-        <div class="audio-sample">
-          <p class="font-medium mb-2">SNR = 15 dB: Sort-Match Strategy</p>
-          <p class="text-sm text-gray-600 mb-2">
-            Very Good. 
-          </p>
-          <audio controls class="w-full">
-            <source src="audio/Sort_Match/sort/SNR15/121_127105_000016_000006.wav" type="audio/wav" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-        <div class="audio-sample">
-          <p class="font-medium mb-2">SNR = 15 dB: Random-Match Strategy</p>
-          <p class="text-sm text-gray-600 mb-2">
-            Satisfactory. 
-          </p>
-          <audio controls class="w-full">
-            <source src="audio/Sort_Match/random/SNR15/121_127105_000016_000006.wav" type="audio/wav" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-      </div>
-
-      <!-- 5) Comparison With Other Models -->
-      <h3 id="comparison-models" class="subsection-title">5) Comparison With Other Models</h3>
+      <!-- 4) Comparison With Other Models -->
+      <h3 id="comparison-models" class="subsection-title">4) Comparison With Other Models</h3>
       <p class="text-gray-700 mb-4">
         We benchmark ZeroSC-SR against EnCodec and LPC. Our system achieves the highest compression ratio while maintaining robust performance in low-power conditions. Though all systems converge at high power levels, ZeroSC-SR excels in challenging environments, retaining both semantic content and speaker identity when channel quality is poor.
       </p>
@@ -591,8 +597,6 @@
       </div>
     </section>
 
-    
-
     <!-- Code -->
     <section id="code" class="mb-12">
       <h2 class="section-title">Code</h2>
@@ -608,9 +612,8 @@
     <section id="references" class="mb-12">
       <h2 class="section-title">References</h2>
       <ol class="list-decimal list-inside text-gray-700 ml-6">
-        <!-- Keep only the references cited in the text -->
         <li>
-          <strong>[R1]</strong> D{\'e}fossez, A., Copet, J., Synnaeve, G., &amp; Adi, Y. (2022).
+          <strong>[R1]</strong> Défossez, A., Copet, J., Synnaeve, G., & Adi, Y. (2022).
           "High Fidelity Neural Audio Compression." 
           <em>arXiv preprint arXiv:2210.13438</em>.
         </li>
@@ -619,12 +622,37 @@
           "Neural Codec Language Models Are Zero-Shot Text to Speech Synthesizers," 
           <em>arXiv preprint arXiv:2301.02111</em>.
         </li>
+        <li>
+          <strong>[R3]</strong> Panayotov, V., Chen, G., Povey, D., & Khudanpur, S. (2015).
+          "Librispeech: An ASR corpus based on public domain audio books."
+          <em>2015 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</em>.
+        </li>
+        <li>
+          <strong>[R4]</strong> Klakow, D., & Peters, J. (2002).
+          "Testing the correlation of word error rate and perplexity."
+          <em>Speech Communication, 38(1-2), 19-28</em>.
+        </li>
+        <li>
+          <strong>[R5]</strong> Chen, S., Wang, C., Chen, Z., Wu, Y., Liu, S., Chen, Z., ... & Watanabe, S. (2022).
+          "WavLM: Large-Scale Self-Supervised Pre-Training for Full Stack Speech Processing."
+          <em>IEEE Journal of Selected Topics in Signal Processing, 16(6), 1505-1518</em>.
+        </li>
+        <li>
+          <strong>[R6]</strong> Radford, A., Kim, J. W., Xu, T., Brockman, G., McLeavey, C., & Sutskever, I. (2023).
+          "Robust Speech Recognition via Large-Scale Weak Supervision."
+          <em>arXiv preprint arXiv:2212.04356</em>.
+        </li>
+        <li>
+          <strong>[R7]</strong> Goldsmith, A. (2005).
+          "Wireless Communications."
+          <em>Cambridge University Press</em>.
+        </li>
       </ol>
     </section>
 
     <!-- Footer -->
     <footer class="mt-12 text-center text-gray-500 text-sm">
-      <p class="mb-2">&copy; Wang Zewei</p>
+      <p class="mb-2">© Wang Zewei</p>
     </footer>
   </div>
 </body>
